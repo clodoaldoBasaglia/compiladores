@@ -23,7 +23,7 @@ t_MULTIPLICACAO=r'\*'
 t_DIVISAO=r'\/'
 t_IGUAL=r'\='
 t_ABRE_PARENTESES=r'\('
-t_FECHA_PARENTESES=r'\('
+t_FECHA_PARENTESES=r'\)'
 t_VIRGULA=r'\,'
 t_MENOR=r'\<'
 t_MAIOR=r'\>'
@@ -71,7 +71,10 @@ lexico = lex.lex()
 
 if __name__ == '__main__':
     import sys
-    codigo = open(sys.argv[1])
+    # Para compilar no terminal
+    # codigo = open(sys.argv[1])
+    #para compilar no PyCharm
+    codigo = open("testes/fat.tpp")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
