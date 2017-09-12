@@ -17,7 +17,7 @@ palavrasReservadas = {
 }
 tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
           'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'ID', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA',
-          'MULTIPLICACAO'] + list(palavrasReservadas.values())
+          'MULTIPLICACAO','ABRE_COLXETE','FECHA_COLXETE','E_LOGICO','NEGACAO'] + list(palavrasReservadas.values())
 
 t_SOMA = r'\+'
 t_SUBTRACAO = r'-'
@@ -33,8 +33,10 @@ t_ATRIBUICAO = r':\='
 t_MENOR_IGUAL = r'<='
 t_MAIOR_IGUAL = r'>='
 t_DOIS_PONTOS = r':'
-
-
+t_ABRE_COLXETE=r'\['
+t_FECHA_COLXETE=r'\]'
+t_E_LOGICO=r'&&'
+t_NEGACAO=r'!'
 def t_ID(t):
     r'[a-zA-Zà-ú][0-9a-zà-úA-Z]*'
     t.type = palavrasReservadas.get(t.value, 'ID')
