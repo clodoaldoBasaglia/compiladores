@@ -87,7 +87,7 @@ if __name__ == '__main__':
     # Para compilar no terminal
     # codigo = open(sys.argv[1])
     # para compilar no PyCharm
-    codigo = open("testes/fat.tpp")
+    codigo = open("testes/teste-2.tpp")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
