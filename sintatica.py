@@ -14,7 +14,7 @@ class Tree:
         return ret
 
 
-precedence = (('left', 'SOMA', 'SUB'), ('left', 'MULT', 'DIVISAO'))
+tokens = (('left', 'SOMA', 'SUB'), ('left', 'MULT', 'DIVISAO'))
 
 
 def p_programa_1(p):

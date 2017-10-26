@@ -1,0 +1,71 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ('left', 'SOMA', 'SUB')
+    ('left', 'MULT', 'DIVISAO')
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> principal
+Rule 2     programa -> func_loop principal
+Rule 3     programa -> declara_var programa
+Rule 4     principal -> VAZIO PRINCIPAL ABRE_PAR FECHA_PAR NOVA_LINHA sequencia_decl FIM
+Rule 5     func_loop -> func_decl
+Rule 6     func_loop -> func_loop func_decl
+Rule 7     func_decl -> tipo ID ABRE_PAR parametro_decl FECHA_PAR NOVA_LINHA sequencia_decl FIM NOVA_LINHA
+Rule 8     sequencia_decl -> declaracao
+Rule 9     sequencia_decl -> sequencia_decl declaracao
+Rule 10    declaracao -> se_decl
+Rule 11    declaracao -> repita_decl
+Rule 12    declaracao -> atribuicao_decl
+Rule 13    declaracao -> leia_decl
+Rule 14    declaracao -> escreva_decl
+Rule 15    declaracao -> declara_var
+Rule 16    declaracao -> retorna_decl
+Rule 17    declaracao -> chamada_func
+Rule 18    retorna_decl -> RETORNA ABRE_PAR ID FECHA_PAR NOVA_LINHA
+Rule 19    retorna_decl -> RETORNA ABRE_PAR numero_decl FECHA_PAR NOVA_LINHA
+Rule 20    numero_decl -> INTEIRO
+Rule 21    numero_decl -> FLUTUANTE
+Rule 22    se_decl -> SE exp_decl ENTAO NOVA_LINHA sequencia_decl FIM NOVA_LINHA
+Rule 23    se_decl -> SE exp_decl ENTAO NOVA_LINHA sequencia_decl SENAO NOVA_LINHA sequencia_decl FIM NOVA_LINHA
+Rule 24    repita_decl -> REPITA NOVA_LINHA sequencia_decl ATE exp_decl NOVA_LINHA
+Rule 25    atribuicao_decl -> ID ATRIBUICAO exp_decl NOVA_LINHA
+Rule 26    leia_decl -> LEIA ABRE_PAR ID FECHA_PAR NOVA_LINHA
+Rule 27    escreva_decl -> ESCREVA ABRE_PAR exp_decl FECHA_PAR NOVA_LINHA
+Rule 28    escreva_decl -> ESCREVA ABRE_PAR chamada_func_escreva FECHA_PAR NOVA_LINHA
+Rule 29    chamada_func -> ID ABRE_PAR parametro_chama_func FECHA_PAR NOVA_LINHA
+Rule 30    chamada_func_escreva -> ID ABRE_PAR parametro_chama_func FECHA_PAR
+Rule 31    parametro_chama_func -> parametro_chama_func VIRGULA ID
+Rule 32    parametro_chama_func -> parametro_chama_func VIRGULA numero_decl
+Rule 33    parametro_chama_func -> ID
+Rule 34    parametro_chama_func -> numero_decl
+Rule 35    exp_decl -> simples_exp
+Rule 36    exp_decl -> simples_exp compara_op simples_exp
+Rule 37    compara_op -> IGUAL
+Rule 38    compara_op -> MENOR
+Rule 39    compara_op -> MAIOR
+Rule 40    compara_op -> MENOR_IGUAL
+Rule 41    compara_op -> MAIOR_IGUAL
+Rule 42    simples_exp -> termo
+Rule 43    simples_exp -> simples_exp soma_sub termo
+Rule 44    soma_sub -> SOMA
+Rule 45    soma_sub -> SUB
+Rule 46    termo -> fator
+Rule 47    termo -> termo mult_div fator
+Rule 48    mult_div -> MULT
+Rule 49    mult_div -> DIVISAO
+Rule 50    fator -> ID
+Rule 51    fator -> numero_decl
+Rule 52    fator -> ABRE_PAR exp_decl FECHA_PAR
+Rule 53    declara_var -> tipo DOIS_PONTOS ID NOVA_LINHA
+Rule 54    parametro_decl -> parametro_decl VIRGULA tipo DOIS_PONTOS ID
+Rule 55    parametro_decl -> tipo DOIS_PONTOS ID
+Rule 56    tipo -> VAZIO
+Rule 57    tipo -> INTEIRO
+Rule 58    tipo -> FLUTUANTE
+
+Terminals, with rules where they appear
+
