@@ -8,14 +8,13 @@ declaracao ::= declaracao_variaveis
 		|declaracao_funcao
 declaracao_variaveis ::=tipo ":" lista_variaveis
 iniciazacao_variaveis ::= atribuicao
-lista_variaveis := lista_variaveis "," var
+lista_variaveis := lista_variaveis
 		|var
-var::= ID
-	|ID indice
-indice::=indice"["expressao"]"
-	|"["expressao"]"
-
-tipo::=INTEIRO
+var ::= ID
+	  |ID indice
+indice ::= indice"["expressao"]"
+    	|"["expressao"]"
+tipo ::= INTEIRO
 	|FLUTUANTE
 declaracao_funcao::= tipo cabelcalho
 		|cabecalho
@@ -50,4 +49,32 @@ expressao_simples::= expressao_aditiva
 	|expressao_simples operador_relacional expressao_aditiva
 expressao_aditiva::= expressao_multiplicativa
 	|expressao_aditiva operador_soma expressao_multiplicativa
-expressao_multiplicativa e
+expressao_multiplicativa::= expressao_unaria 
+                            | expressao_multiplicativa operador_multiplicacao expressao_unaria
+expressao_unaria ::= fator    
+                    | operador_soma expressao
+
+operador_relacional::="<"
+                    |">"
+                    |"="
+                    |"<>"
+                    |"<="
+                    |">="
+operador_soma::="+"
+                |"-"
+operador_multiplicacao::="*"
+                    |"/"
+
+fator ::="(" expressao ")"
+        |var
+        | chamada_funcao
+        | numero
+numero ::=NUM_INTEIRO
+        | NUM_PONTO_FLUTUANTE
+
+
+chamada_funcao ::= ID "(" lista_argumentos ")"
+lista_argumentos  ::=lista_argumentos "," expressao
+                | expressao
+                | vazio
+

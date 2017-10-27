@@ -2,70 +2,84 @@ Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    ('left', 'SOMA', 'SUB')
-    ('left', 'MULT', 'DIVISAO')
+    ('left', 'SOMA', 'SUBTRACAO')
+    ('left', 'MULTIPLICACAO', 'DIVISAO')
 
 Grammar
 
 Rule 0     S' -> programa
-Rule 1     programa -> principal
-Rule 2     programa -> func_loop principal
-Rule 3     programa -> declara_var programa
-Rule 4     principal -> VAZIO PRINCIPAL ABRE_PAR FECHA_PAR NOVA_LINHA sequencia_decl FIM
-Rule 5     func_loop -> func_decl
-Rule 6     func_loop -> func_loop func_decl
-Rule 7     func_decl -> tipo ID ABRE_PAR parametro_decl FECHA_PAR NOVA_LINHA sequencia_decl FIM NOVA_LINHA
-Rule 8     sequencia_decl -> declaracao
-Rule 9     sequencia_decl -> sequencia_decl declaracao
-Rule 10    declaracao -> se_decl
-Rule 11    declaracao -> repita_decl
-Rule 12    declaracao -> atribuicao_decl
-Rule 13    declaracao -> leia_decl
-Rule 14    declaracao -> escreva_decl
-Rule 15    declaracao -> declara_var
-Rule 16    declaracao -> retorna_decl
-Rule 17    declaracao -> chamada_func
-Rule 18    retorna_decl -> RETORNA ABRE_PAR ID FECHA_PAR NOVA_LINHA
-Rule 19    retorna_decl -> RETORNA ABRE_PAR numero_decl FECHA_PAR NOVA_LINHA
-Rule 20    numero_decl -> INTEIRO
-Rule 21    numero_decl -> FLUTUANTE
-Rule 22    se_decl -> SE exp_decl ENTAO NOVA_LINHA sequencia_decl FIM NOVA_LINHA
-Rule 23    se_decl -> SE exp_decl ENTAO NOVA_LINHA sequencia_decl SENAO NOVA_LINHA sequencia_decl FIM NOVA_LINHA
-Rule 24    repita_decl -> REPITA NOVA_LINHA sequencia_decl ATE exp_decl NOVA_LINHA
-Rule 25    atribuicao_decl -> ID ATRIBUICAO exp_decl NOVA_LINHA
-Rule 26    leia_decl -> LEIA ABRE_PAR ID FECHA_PAR NOVA_LINHA
-Rule 27    escreva_decl -> ESCREVA ABRE_PAR exp_decl FECHA_PAR NOVA_LINHA
-Rule 28    escreva_decl -> ESCREVA ABRE_PAR chamada_func_escreva FECHA_PAR NOVA_LINHA
-Rule 29    chamada_func -> ID ABRE_PAR parametro_chama_func FECHA_PAR NOVA_LINHA
-Rule 30    chamada_func_escreva -> ID ABRE_PAR parametro_chama_func FECHA_PAR
-Rule 31    parametro_chama_func -> parametro_chama_func VIRGULA ID
-Rule 32    parametro_chama_func -> parametro_chama_func VIRGULA numero_decl
-Rule 33    parametro_chama_func -> ID
-Rule 34    parametro_chama_func -> numero_decl
-Rule 35    exp_decl -> simples_exp
-Rule 36    exp_decl -> simples_exp compara_op simples_exp
-Rule 37    compara_op -> IGUAL
-Rule 38    compara_op -> MENOR
-Rule 39    compara_op -> MAIOR
-Rule 40    compara_op -> MENOR_IGUAL
-Rule 41    compara_op -> MAIOR_IGUAL
-Rule 42    simples_exp -> termo
-Rule 43    simples_exp -> simples_exp soma_sub termo
-Rule 44    soma_sub -> SOMA
-Rule 45    soma_sub -> SUB
-Rule 46    termo -> fator
-Rule 47    termo -> termo mult_div fator
-Rule 48    mult_div -> MULT
-Rule 49    mult_div -> DIVISAO
-Rule 50    fator -> ID
-Rule 51    fator -> numero_decl
-Rule 52    fator -> ABRE_PAR exp_decl FECHA_PAR
-Rule 53    declara_var -> tipo DOIS_PONTOS ID NOVA_LINHA
-Rule 54    parametro_decl -> parametro_decl VIRGULA tipo DOIS_PONTOS ID
-Rule 55    parametro_decl -> tipo DOIS_PONTOS ID
-Rule 56    tipo -> VAZIO
-Rule 57    tipo -> INTEIRO
-Rule 58    tipo -> FLUTUANTE
+Rule 1     programa -> lista_declaracoes
+Rule 2     lista_declaracoes -> lista_declaracoes declaracao
+Rule 3     lista_declaracoes -> declaracao
+Rule 4     declaracao -> declaracao_variaveis
+Rule 5     declaracao -> inicializacao_variaveis
+Rule 6     declaracao -> declaracao_funcao
+Rule 7     declaracao_variaveis -> tipo DOISPONTOS lista_variaveis
+Rule 8     inicializacao_variaveis -> atribuicao
+Rule 9     lista_variaveis -> lista_variaveis VIRGULA var
+Rule 10    lista_variaveis -> var
+Rule 11    var -> IDENTIFICADOR
+Rule 12    var -> IDENTIFICADOR indice
+Rule 13    indice -> indice ABRECOL expressao FECHACOL
+Rule 14    indice -> ABRECOL expressao FECHACOL
+Rule 15    tipo -> INTEIRO
+Rule 16    tipo -> FLUTUANTE
+Rule 17    declaracao_funcao -> tipo cabecalho
+Rule 18    declaracao_funcao -> cabecalho
+Rule 19    cabecalho -> IDENTIFICADOR ABREPAR lista_parametros FECHAPAR corpo FIM
+Rule 20    lista_parametros -> lista_parametros VIRGULA lista_parametros
+Rule 21    lista_parametros -> parametro
+Rule 22    lista_parametros -> vazio
+Rule 23    parametro -> tipo DOISPONTOS IDENTIFICADOR
+Rule 24    parametro -> parametro ABRECOL FECHACOL
+Rule 25    corpo -> corpo acao
+Rule 26    corpo -> vazio
+Rule 27    acao -> expressao
+Rule 28    acao -> declaracao_variaveis
+Rule 29    acao -> se
+Rule 30    acao -> repita
+Rule 31    acao -> leia
+Rule 32    acao -> escreva
+Rule 33    acao -> retorna
+Rule 34    acao -> error
+Rule 35    se -> SE expressao ENTAO corpo FIM
+Rule 36    se -> SE expressao ENTAO corpo SENAO corpo FIM
+Rule 37    repita -> REPITA corpo ATE expressao
+Rule 38    atribuicao -> var ATRIBUICAO expressao
+Rule 39    leia -> LEIA ABREPAR IDENTIFICADOR FECHAPAR
+Rule 40    escreva -> ESCREVA ABREPAR expressao FECHAPAR
+Rule 41    retorna -> RETORNA ABREPAR expressao FECHAPAR
+Rule 42    expressao -> expressao_simples
+Rule 43    expressao -> atribuicao
+Rule 44    expressao_simples -> expressao_aditiva
+Rule 45    expressao_simples -> expressao_simples operador_relacional expressao_aditiva
+Rule 46    expressao_aditiva -> expressao_multiplicativa
+Rule 47    expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria
+Rule 48    expressao_multiplicativa -> expressao_unaria
+Rule 49    expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria
+Rule 50    expressao_unaria -> fator
+Rule 51    expressao_unaria -> operador_soma fator
+Rule 52    operador_relacional -> MENOR
+Rule 53    operador_relacional -> MAIOR
+Rule 54    operador_relacional -> IGUALDADE
+Rule 55    operador_relacional -> MENORIGUAL
+Rule 56    operador_relacional -> MAIORIGUAL
+Rule 57    operador_relacional -> NEGACAO
+Rule 58    operador_soma -> SOMA
+Rule 59    operador_soma -> SUBTRACAO
+Rule 60    operador_multiplicacao -> MULTIPLICACAO
+Rule 61    operador_multiplicacao -> DIVISAO
+Rule 62    fator -> ABRECOL expressao FECHACOL
+Rule 63    fator -> var
+Rule 64    fator -> chamada_funcao
+Rule 65    fator -> numero
+Rule 66    numero -> INTEIRO
+Rule 67    numero -> FLUTUANTE
+Rule 68    chamada_funcao -> IDENTIFICADOR ABREPAR lista_argumentos FECHAPAR
+Rule 69    lista_argumentos -> lista_argumentos VIRGULA expressao
+Rule 70    lista_argumentos -> expressao
+Rule 71    lista_argumentos -> vazio
+Rule 72    vazio -> <empty>
 
 Terminals, with rules where they appear
 
