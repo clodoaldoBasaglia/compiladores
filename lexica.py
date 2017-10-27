@@ -88,9 +88,12 @@ if __name__ == '__main__':
     # codigo = open(sys.argv[1])
     # para compilar no PyCharm
     codigo = open("testes/fat.tpp")
+    saida = open("saida.ss","w")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
         if not token:
             break
         print(token)
+        saida.write(str(token)+"\n")
+    saida.close()

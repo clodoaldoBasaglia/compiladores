@@ -2,8 +2,14 @@ Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    ('left', 'SOMA', 'SUBTRACAO')
-    ('left', 'MULTIPLICACAO', 'DIVISAO')
+    MENOR_IGUAL
+    VAZIO
+    IGUAL
+    ID
+    E_LOGICO
+    MAIOR_IGUAL
+    NOVA_LINHA
+    PRINCIPAL
 
 Grammar
 
@@ -14,24 +20,24 @@ Rule 3     lista_declaracoes -> declaracao
 Rule 4     declaracao -> declaracao_variaveis
 Rule 5     declaracao -> inicializacao_variaveis
 Rule 6     declaracao -> declaracao_funcao
-Rule 7     declaracao_variaveis -> tipo DOISPONTOS lista_variaveis
+Rule 7     declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis
 Rule 8     inicializacao_variaveis -> atribuicao
 Rule 9     lista_variaveis -> lista_variaveis VIRGULA var
 Rule 10    lista_variaveis -> var
 Rule 11    var -> IDENTIFICADOR
 Rule 12    var -> IDENTIFICADOR indice
-Rule 13    indice -> indice ABRECOL expressao FECHACOL
-Rule 14    indice -> ABRECOL expressao FECHACOL
+Rule 13    indice -> indice ABRE_COLXETE expressao FECHA_COLXETE
+Rule 14    indice -> ABRE_COLXETE expressao FECHA_COLXETE
 Rule 15    tipo -> INTEIRO
 Rule 16    tipo -> FLUTUANTE
 Rule 17    declaracao_funcao -> tipo cabecalho
 Rule 18    declaracao_funcao -> cabecalho
-Rule 19    cabecalho -> IDENTIFICADOR ABREPAR lista_parametros FECHAPAR corpo FIM
+Rule 19    cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
 Rule 20    lista_parametros -> lista_parametros VIRGULA lista_parametros
 Rule 21    lista_parametros -> parametro
 Rule 22    lista_parametros -> vazio
 Rule 23    parametro -> tipo DOISPONTOS IDENTIFICADOR
-Rule 24    parametro -> parametro ABRECOL FECHACOL
+Rule 24    parametro -> parametro ABRE_COLXETE FECHA_COLXETE
 Rule 25    corpo -> corpo acao
 Rule 26    corpo -> vazio
 Rule 27    acao -> expressao
@@ -46,9 +52,9 @@ Rule 35    se -> SE expressao ENTAO corpo FIM
 Rule 36    se -> SE expressao ENTAO corpo SENAO corpo FIM
 Rule 37    repita -> REPITA corpo ATE expressao
 Rule 38    atribuicao -> var ATRIBUICAO expressao
-Rule 39    leia -> LEIA ABREPAR IDENTIFICADOR FECHAPAR
-Rule 40    escreva -> ESCREVA ABREPAR expressao FECHAPAR
-Rule 41    retorna -> RETORNA ABREPAR expressao FECHAPAR
+Rule 39    leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
+Rule 40    escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES
+Rule 41    retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES
 Rule 42    expressao -> expressao_simples
 Rule 43    expressao -> atribuicao
 Rule 44    expressao_simples -> expressao_aditiva
@@ -69,17 +75,94 @@ Rule 58    operador_soma -> SOMA
 Rule 59    operador_soma -> SUBTRACAO
 Rule 60    operador_multiplicacao -> MULTIPLICACAO
 Rule 61    operador_multiplicacao -> DIVISAO
-Rule 62    fator -> ABRECOL expressao FECHACOL
+Rule 62    fator -> ABRE_COLXETE expressao FECHA_COLXETE
 Rule 63    fator -> var
 Rule 64    fator -> chamada_funcao
 Rule 65    fator -> numero
 Rule 66    numero -> INTEIRO
 Rule 67    numero -> FLUTUANTE
-Rule 68    chamada_funcao -> IDENTIFICADOR ABREPAR lista_argumentos FECHAPAR
+Rule 68    chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
 Rule 69    lista_argumentos -> lista_argumentos VIRGULA expressao
 Rule 70    lista_argumentos -> expressao
 Rule 71    lista_argumentos -> vazio
 Rule 72    vazio -> <empty>
 
 Terminals, with rules where they appear
+
+ABRE_COLXETE         : 13 14 24 62
+ABRE_PARENTESES      : 19 39 40 41 68
+ATE                  : 37
+ATRIBUICAO           : 38
+DIVISAO              : 61
+DOIS_PONTOS          : 7
+ENTAO                : 35 36
+ESCREVA              : 40
+E_LOGICO             : 
+FECHA_COLXETE        : 13 14 24 62
+FECHA_PARENTESES     : 19 39 40 41 68
+FIM                  : 19 35 36
+FLUTUANTE            : 16 67
+ID                   : 
+IGUAL                : 
+INTEIRO              : 15 66
+LEIA                 : 39
+MAIOR                : 53
+MAIOR_IGUAL          : 
+MENOR                : 52
+MENOR_IGUAL          : 
+MULTIPLICACAO        : 60
+NEGACAO              : 57
+NOVA_LINHA           : 
+PRINCIPAL            : 
+REPITA               : 37
+RETORNA              : 41
+SE                   : 35 36
+SENAO                : 36
+SOMA                 : 58
+SUBTRACAO            : 59
+VAZIO                : 
+VIRGULA              : 9 20 69
+error                : 34
+
+Nonterminals, with rules where they appear
+
+DOISPONTOS           : 23
+IDENTIFICADOR        : 11 12 19 23 39 68
+IGUALDADE            : 54
+MAIORIGUAL           : 56
+MENORIGUAL           : 55
+acao                 : 25
+atribuicao           : 8 43
+cabecalho            : 17 18
+chamada_funcao       : 64
+corpo                : 19 25 35 36 36 37
+declaracao           : 2 3
+declaracao_funcao    : 6
+declaracao_variaveis : 4 28
+escreva              : 32
+expressao            : 13 14 27 35 36 37 38 40 41 62 69 70
+expressao_aditiva    : 44 45 47
+expressao_multiplicativa : 46 49
+expressao_simples    : 42 45
+expressao_unaria     : 47 48 49
+fator                : 50 51
+indice               : 12 13
+inicializacao_variaveis : 5
+leia                 : 31
+lista_argumentos     : 68 69
+lista_declaracoes    : 1 2
+lista_parametros     : 19 20 20
+lista_variaveis      : 7 9
+numero               : 65
+operador_multiplicacao : 47 49
+operador_relacional  : 45
+operador_soma        : 51
+parametro            : 21 24
+programa             : 0
+repita               : 30
+retorna              : 33
+se                   : 29
+tipo                 : 7 17 23
+var                  : 9 10 38 63
+vazio                : 22 26 71
 

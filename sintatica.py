@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 # from ply.lex import tokens
 import ply.lex
-
+import lexica
 
 class Tree:
     def __init__(self, type_node, child=[], value=None):
@@ -16,8 +16,8 @@ class Tree:
         return ret
 
 
-tokens = (('left', 'SOMA', 'SUBTRACAO'), ('left', 'MULTIPLICACAO', 'DIVISAO'))
-
+precedence = (('left', 'SOMA', 'SUBTRACAO'), ('left', 'MULTIPLICACAO', 'DIVISAO'))
+tokens = lexica.tokens
 
 def p_programa_1(p):
     'programa : lista_declaracoes'
@@ -41,7 +41,7 @@ def p_declaracao(p):
 
 
 def p_declaracao_variaveis(p):
-    '''declaracao_variaveis : tipo DOISPONTOS lista_variaveis'''
+    '''declaracao_variaveis : tipo DOIS_PONTOS lista_variaveis'''
     p[0] = Tree('declaracao_variaveis', [p[1], p[3]], p[2])
 
 
@@ -73,8 +73,8 @@ def p_var(p):
 
 
 def p_indice(p):
-    '''indice : indice ABRECOL expressao FECHACOL
-                | ABRECOL expressao FECHACOL'''
+    '''indice : indice ABRE_COLXETE expressao FECHA_COLXETE
+                | ABRE_COLXETE expressao FECHA_COLXETE'''
     if len(p) == 5:
         p[0] = Tree('indice', [p[1], p[3]])
     elif len(p) == 4:
@@ -111,7 +111,7 @@ def p_declaracao_funcao(p):
 
 def p_cabecalho(p):
     '''
-    cabecalho : IDENTIFICADOR ABREPAR lista_parametros FECHAPAR corpo FIM
+    cabecalho : IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
     '''
     # self.count += 1
     p[0] = Tree('cabecalho', [p[3], p[5]], p[1])
@@ -139,7 +139,7 @@ def p_parametro1(p):
 
 def p_parametro2(p):
     '''
-    parametro : parametro ABRECOL FECHACOL
+    parametro : parametro ABRE_COLXETE FECHA_COLXETE
     '''
     p[0] = Tree('parametro', [p[1]])
 
@@ -196,9 +196,9 @@ def p_atribuicao(p):
         p[0] = Tree('atribuicao', [p[1], p[3]])
 
 
-def p_leia( p):
+def p_leia(p):
     '''
-    leia : LEIA ABREPAR IDENTIFICADOR FECHAPAR
+    leia : LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
     '''
     if len(p):
         p[0] = Tree('leia', [], p[3])
@@ -206,19 +206,19 @@ def p_leia( p):
 
 def p_escreva(p):
     '''
-    escreva : ESCREVA ABREPAR expressao FECHAPAR
+    escreva : ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES
     '''
     p[0] = Tree('escreva', [p[3]])
 
 
-def p_retorna( p):
+def p_retorna(p):
     '''
-    retorna : RETORNA ABREPAR expressao FECHAPAR
+    retorna : RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES
     '''
     p[0] = Tree('retorna', [p[3]])
 
 
-def p_expressao( p):
+def p_expressao(p):
     '''
     expressao : expressao_simples
                 | atribuicao
@@ -303,7 +303,7 @@ def p_operador_multiplicacao(p):
 
 def p_fator(p):
     '''
-    fator : ABRECOL  expressao FECHACOL
+    fator : ABRE_COLXETE  expressao FECHA_COLXETE
             | var
             | chamada_funcao
             | numero
@@ -325,7 +325,7 @@ def p_numero(p):
 
 def p_chamada_funcao(p):
     '''
-    chamada_funcao : IDENTIFICADOR ABREPAR lista_argumentos FECHAPAR
+    chamada_funcao : IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
     '''
     p[0] = Tree('chamada_funcao', [p[3]], p[1])
 
@@ -352,12 +352,10 @@ def p_error(p):
     if p:
         print("Erro sintático: '%s', linha %d" % (p.value, p.lineno))
         exit(1)
-        # p.lexer.skip(1)
     else:
         yacc.restart()
         print('Erro sintático: definições incompletas!')
         exit(1)
-        # p.lexer.skip(1)
 
 
 def parse_tree(code):
@@ -369,8 +367,8 @@ if __name__ == '__main__':
     import sys
 
     parser = yacc.yacc(debug=True)
-    code = open(sys.argv[1])
-    # code = open("sintatica-testes/fat.tpp")
+    # code = open(sys.argv[1])
+    code = open("saida.ss")
     if 'a' in sys.argv:
         print(parser.parse(code.read()))
     else:
