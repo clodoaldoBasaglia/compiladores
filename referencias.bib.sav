@@ -10,4 +10,11 @@
   pages   = {95-142},
 }
 
+@Article{Johnson:1979,
+  author  = {Stephen C. Johnson},
+  title   = {Yet Another Compiler Compiler)},
+  journal = {AT\&T Bell Laboratories},
+  year    = {1979},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
