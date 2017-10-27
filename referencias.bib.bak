@@ -1,0 +1,10 @@
+% Encoding: UTF-8
+
+@Book{,
+  author = {Keneeth C. Louden},
+  title  = {Compiladores: Principios e práticas},
+  year   = {2004},
+  editor = {Ada Santos Seles},
+}
+
+@Comment{jabref-meta: databaseType:biblatex;}
