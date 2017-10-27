@@ -3,6 +3,7 @@ import ply.yacc as yacc
 import ply.lex
 import lexica
 
+
 class Tree:
     def __init__(self, type_node, child=[], value=None):
         self.type = type_node
@@ -14,10 +15,12 @@ class Tree:
         for child in self.child:
             ret += child.__str__(level + 1)
         return ret
-
+    def mostra(self):
+        print(self.value)
 
 precedence = (('left', 'SOMA', 'SUBTRACAO'), ('left', 'MULTIPLICACAO', 'DIVISAO'))
 tokens = lexica.tokens
+
 
 def p_programa_1(p):
     'programa : lista_declaracoes'
@@ -61,8 +64,8 @@ def p_lista_variaveis(p):
 
 
 def p_var(p):
-    '''var : IDENTIFICADOR
-            | IDENTIFICADOR indice
+    '''var : ID
+            | ID indice
    '''
 
     if len(p) == 2:
@@ -111,7 +114,7 @@ def p_declaracao_funcao(p):
 
 def p_cabecalho(p):
     '''
-    cabecalho : IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
+    cabecalho : ID ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
     '''
     # self.count += 1
     p[0] = Tree('cabecalho', [p[3], p[5]], p[1])
@@ -132,7 +135,7 @@ def p_lista_parametros(p):
 
 def p_parametro1(p):
     '''
-    parametro : tipo DOISPONTOS IDENTIFICADOR
+    parametro : tipo DOIS_PONTOS ID
     '''
     p[0] = Tree('parametro', [p[1]], p[3])
 
@@ -198,7 +201,7 @@ def p_atribuicao(p):
 
 def p_leia(p):
     '''
-    leia : LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
+    leia : LEIA ABRE_PARENTESES ID FECHA_PARENTESES
     '''
     if len(p):
         p[0] = Tree('leia', [], p[3])
@@ -276,9 +279,9 @@ def p_operador_relacional(p):
     '''
     operador_relacional : MENOR
                         | MAIOR
-                        | IGUALDADE
-                        | MENORIGUAL
-                        | MAIORIGUAL
+                        | IGUAL
+                        | MENOR_IGUAL
+                        | MAIOR_IGUAL
                         | NEGACAO
     '''
 
@@ -325,7 +328,7 @@ def p_numero(p):
 
 def p_chamada_funcao(p):
     '''
-    chamada_funcao : IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    chamada_funcao : ID ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
     '''
     p[0] = Tree('chamada_funcao', [p[3]], p[1])
 
@@ -363,9 +366,17 @@ def parse_tree(code):
     return parser.parse(code)
 
 
+def mostra_tree(node, w, i):
+    if node != None:
+        value1 = node.type + str(i)
+        i = i + 1
+        for son in node.child:
+            w.edge(value1, str(son) + str(i))
+            mostra_tree(son, w, i)
+
+
 if __name__ == '__main__':
     import sys
-
     parser = yacc.yacc(debug=True)
     # code = open(sys.argv[1])
     code = open("saida.ss")
