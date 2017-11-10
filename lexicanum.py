@@ -93,7 +93,7 @@ if __name__ == '__main__':
     # codigo = open(sys.argv[1])
     # para compilar no PyCharm
     codigo = io.open("testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
-    saida = open("saida.txt", "w")
+    saida = io.open("saida.txt",  mode="w", encoding="utf-8")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
