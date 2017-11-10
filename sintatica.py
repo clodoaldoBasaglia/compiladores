@@ -50,7 +50,7 @@ class Parser:
 
     def p_declaracao_variaveis(self,p):
         '''
-        declaracao_variaveis : tipo DOISPONTOS lista_variaveis
+        declaracao_variaveis : tipo DOIS_PONTOS lista_variaveis
         '''
         p[0] = Arvore('declaracao_variaveis', [p[1], p[3]], p[2])
 
@@ -84,8 +84,8 @@ class Parser:
 
     def p_indice(self,p):
         '''
-        indice : indice ABRECOL expressao FECHACOL
-                | ABRECOL expressao FECHACOL
+        indice : indice ABRE_COLXETE expressao FECHA_COLXETE
+                | ABRE_COLXETE expressao FECHA_COLXETE
         '''
         if (len(p) == 5):
             p[0] = Arvore('indice', [p[1], p[3]])
@@ -116,7 +116,7 @@ class Parser:
 
     def p_cabecalho(self,p):
         '''
-        cabecalho : IDENTIFICADOR ABREPAR lista_parametros FECHAPAR corpo FIM
+        cabecalho : IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
         '''
         p[0] = Arvore('cabecalho', [p[3], p[5]], p[1])
 
@@ -133,13 +133,13 @@ class Parser:
 
     def p_parametro1(self,p):
         '''
-        parametro : tipo DOISPONTOS IDENTIFICADOR
+        parametro : tipo DOIS_PONTOS IDENTIFICADOR
         '''
         p[0] = Arvore('parametro', [p[1]], p[3])
 
     def p_parametro2(self,p):
         '''
-        parametro : parametro ABRECOL FECHACOL
+        parametro : parametro ABRE_COLXETE FECHA_COLXETE
         '''
         p[0] = Arvore('parametro', [p[1]])
 
@@ -192,20 +192,20 @@ class Parser:
 
     def p_leia(self,p):
         '''
-        leia : LEIA ABREPAR IDENTIFICADOR FECHAPAR
+        leia : LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
         '''
         if len(self,p):
             p[0] = Arvore('leia', [], p[3])
 
     def p_escreva(self,p):
         '''
-        escreva : ESCREVA ABREPAR expressao FECHAPAR
+        escreva : ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES
         '''
         p[0] = Arvore('escreva', [p[3]])
 
     def p_retorna(self,p):
         '''
-        retorna : RETORNA ABREPAR expressao FECHAPAR
+        retorna : RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES
         '''
         p[0] = Arvore('retorna', [p[3]])
 
@@ -265,8 +265,8 @@ class Parser:
         operador_relacional : MENOR
                             | MAIOR
                             | IGUALDADE
-                            | MENORIGUAL
-                            | MAIORIGUAL
+                            | MENOR_IGUAL
+                            | MAIOR_IGUAL
                             | NEGACAO
         '''
 
