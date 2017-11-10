@@ -1,4 +1,5 @@
 import ply.lex as lex
+import io
 
 palavrasReservadas = {
     'se': 'SE',
@@ -16,9 +17,8 @@ palavrasReservadas = {
     'retorna': 'RETORNA'
 }
 tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
-          'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'ID', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA',
-          'MULTIPLICACAO','ABRE_COLXETE','FECHA_COLXETE','E_LOGICO','NEGACAO'] + list(palavrasReservadas.values())
-
+          'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'ID', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA', 'OU_LOGICO',
+          'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE', 'E_LOGICO', 'NEGACAO'] + list(palavrasReservadas.values())
 t_SOMA = r'\+'
 t_SUBTRACAO = r'-'
 t_MULTIPLICACAO = r'\*'
@@ -33,10 +33,13 @@ t_ATRIBUICAO = r':\='
 t_MENOR_IGUAL = r'<='
 t_MAIOR_IGUAL = r'>='
 t_DOIS_PONTOS = r':'
-t_ABRE_COLXETE=r'\['
-t_FECHA_COLXETE=r'\]'
-t_E_LOGICO=r'&&'
-t_NEGACAO=r'!'
+t_ABRE_COLXETE = r'\['
+t_FECHA_COLXETE = r'\]'
+t_E_LOGICO = r'&&'
+t_NEGACAO = r'!'
+t_OU_LOGICO = r'\|\|'
+
+
 def t_ID(t):
     r'[a-zA-Zà-ú][0-9a-zà-úA-Z]*'
     t.type = palavrasReservadas.get(t.value, 'ID')
@@ -57,6 +60,9 @@ def t_INTEIRO(t):
 
 def t_COMENTARIO(t):
     r'{[^\{^\}]*}'
+    for x in range(1, len(t.value)):
+        if t.value[x] == "\n":
+            t.lexer.lineno += 1
     pass
 
 
@@ -75,7 +81,6 @@ t_ignore = ' \t'
 def t_error(t):
     print("Erro '%s', linha %d" % (t.value[0], t.lineno))
     print(type(t.value))
-    # t.lexer.skip(1)
     exit(0)
 
 
@@ -87,13 +92,13 @@ if __name__ == '__main__':
     # Para compilar no terminal
     # codigo = open(sys.argv[1])
     # para compilar no PyCharm
-    codigo = open("sintatica-testes/fat.tpp")
-    saida = open("saida.ss","w")
+    codigo = io.open("testes/fat.tpp", mode="r", encoding="utf-8")
+    saida = open("saida.txt", "w")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
         if not token:
             break
         print(token)
-        saida.write(str(token)+"\n")
+        saida.write(str(token) + "\n")
     saida.close()
