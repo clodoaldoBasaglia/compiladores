@@ -1,0 +1,108 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DIVISAO
+    ATRIBUICAO
+    MENOR
+    MAIOR
+    IGUAL
+    MENOR_IGUAL
+    MAIOR_IGUAL
+    ABRE_PARENTESES
+    FECHA_PARENTESES
+    DOIS_PONTOS
+    ID
+    SOMA
+    SUBTRACAO
+    NOVA_LINHA
+    OU_LOGICO
+    MULTIPLICACAO
+    ABRE_COLXETE
+    FECHA_COLXETE
+    E_LOGICO
+    NEGACAO
+    SE
+    ENTAO
+    SENAO
+    FIM
+    FLUTUANTE
+    INTEIRO
+    VAZIO
+    ATE
+    REPITA
+    LEIA
+    ESCREVA
+    PRINCIPAL
+    RETORNA
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> lista_declaracoes
+Rule 2     lista_declaracoes -> lista_declaracoes declaracao
+Rule 3     lista_declaracoes -> declaracao
+Rule 4     declaracao -> declaracao_variaveis
+Rule 5     declaracao -> inicializacao_variaveis
+Rule 6     declaracao -> declaracao_funcao
+Rule 7     declaracao_variaveis -> tipo DOISPONTOS lista_variaveis
+Rule 8     inicializacao_variaveis -> atribuicao
+Rule 9     lista_variaveis -> lista_variaveis VIRGULA var
+Rule 10    lista_variaveis -> var
+Rule 11    var -> IDENTIFICADOR
+Rule 12    var -> IDENTIFICADOR indice
+
+Terminals, with rules where they appear
+
+ABRE_COLXETE         : 
+ABRE_PARENTESES      : 
+ATE                  : 
+ATRIBUICAO           : 
+DIVISAO              : 
+DOIS_PONTOS          : 
+ENTAO                : 
+ESCREVA              : 
+E_LOGICO             : 
+FECHA_COLXETE        : 
+FECHA_PARENTESES     : 
+FIM                  : 
+FLUTUANTE            : 
+ID                   : 
+IGUAL                : 
+INTEIRO              : 
+LEIA                 : 
+MAIOR                : 
+MAIOR_IGUAL          : 
+MENOR                : 
+MENOR_IGUAL          : 
+MULTIPLICACAO        : 
+NEGACAO              : 
+NOVA_LINHA           : 
+OU_LOGICO            : 
+PRINCIPAL            : 
+REPITA               : 
+RETORNA              : 
+SE                   : 
+SENAO                : 
+SOMA                 : 
+SUBTRACAO            : 
+VAZIO                : 
+VIRGULA              : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+DOISPONTOS           : 7
+IDENTIFICADOR        : 11 12
+atribuicao           : 8
+declaracao           : 2 3
+declaracao_funcao    : 6
+declaracao_variaveis : 4
+indice               : 12
+inicializacao_variaveis : 5
+lista_declaracoes    : 1 2
+lista_variaveis      : 7 9
+programa             : 0
+tipo                 : 7
+var                  : 9 10
+

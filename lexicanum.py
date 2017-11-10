@@ -92,7 +92,7 @@ if __name__ == '__main__':
     # Para compilar no terminal
     # codigo = open(sys.argv[1])
     # para compilar no PyCharm
-    codigo = io.open("testes/fat.tpp", mode="r", encoding="utf-8")
+    codigo = io.open("testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
     saida = open("saida.txt", "w")
     lexico.input(codigo.read())
     while True:

@@ -29,9 +29,9 @@ def p_programa(p):
 
 def p_lista_declaracoes(p):
     '''
-    	 	lista_declaracoes : lista_declaracoes declaracao
-    	 						| declaracao
-    	 	'''
+    lista_declaracoes : lista_declaracoes declaracao
+                        | declaracao
+    '''
     if (len(p) == 3):
         p[0] = Arvore('lista_declaracoes', [p[1], p[2]])
     elif (len(p) == 2):
@@ -40,32 +40,32 @@ def p_lista_declaracoes(p):
 
 def p_declaraco(p):
     '''
-    	 	declaracao : declaracao_variaveis
-    	 				| inicializacao_variaveis
-    					| declaracao_funcao
-    	 	'''
+    declaracao : declaracao_variaveis
+                | inicializacao_variaveis
+                | declaracao_funcao
+    '''
     p[0] = Arvore('declaracao', [p[1]])
 
 
 def p_declaracao_variaveis(p):
     '''
-    		declaracao_variaveis : tipo DOISPONTOS lista_variaveis
-    	 	'''
+    declaracao_variaveis : tipo DOISPONTOS lista_variaveis
+    '''
     p[0] = Arvore('declaracao_variaveis', [p[1], p[3]], p[2])
 
 
 def p_inicializacao_variaveis(p):
     '''
-    	 	inicializacao_variaveis : atribuicao
-    	 	'''
+    inicializacao_variaveis : atribuicao
+    '''
     p[0] = Arvore('inicializacao_variaveis', [p[1]])
 
 
 def p_lista_variaveis(p):
     '''
-    	 	lista_variaveis : lista_variaveis VIRGULA var
-    	 	 	 	 		| var
-    		'''
+    lista_variaveis : lista_variaveis VIRGULA var
+                    | var
+    '''
     if (len(p) == 4):
         p[0] = Arvore('lista_variaveis', [p[1], p[3]])
 
@@ -75,9 +75,9 @@ def p_lista_variaveis(p):
 
 def p_var(p):
     '''
-    		var : IDENTIFICADOR
-    			| IDENTIFICADOR indice
-    		'''
+    var : IDENTIFICADOR
+        | IDENTIFICADOR indice
+    '''
     if (len(p) == 2):
         p[0] = Arvore('var', [], p[1])
 

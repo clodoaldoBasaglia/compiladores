@@ -38,7 +38,6 @@ fim
 
 { programa principal }
 inteiro principal()
-  preencheVetor()
   bubble_sort()
   retorna(0)
 fim
