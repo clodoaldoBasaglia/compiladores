@@ -90,9 +90,9 @@ if __name__ == '__main__':
     import sys
 
     # Para compilar no terminal
-    # codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
+    codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
     # para compilar no PyCharm
-    codigo = io.open("testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
+    #codigo = io.open("testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
     saida = io.open("saida.txt",  mode="w", encoding="utf-8")
     lexico.input(codigo.read())
     while True:
