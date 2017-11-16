@@ -17,7 +17,7 @@ palavrasReservadas = {
     'retorna': 'RETORNA'
 }
 tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
-          'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'ID', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA', 'OU_LOGICO',
+          'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA', 'OU_LOGICO',
           'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE','IDENTIFICADOR', 'E_LOGICO', 'NEGACAO'] + list(palavrasReservadas.values())
 t_SOMA = r'\+'
 t_SUBTRACAO = r'-'
@@ -40,9 +40,9 @@ t_NEGACAO = r'!'
 t_OU_LOGICO = r'\|\|'
 
 
-def t_ID(t):
+def t_IDENTIFICADOR(t):
     r'[a-zA-Zà-ú][0-9a-zà-úA-Z]*'
-    t.type = palavrasReservadas.get(t.value, 'ID')
+    t.type = palavrasReservadas.get(t.value, 'IDENTIFICADOR')
     return t
 
 
