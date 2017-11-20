@@ -365,12 +365,14 @@ def p_vazio(p):
 
 def p_error(p):
     if p:
-        print(p)
+        #print(p)
         print("Erro sintático: '%s', linha %d" % (p.value, p.lineno))
-        exit(1)
+        #raise SyntaxError(" '%s', linha %d" % (p.value, p.lineno))
+        #exit(1)
     else:
-        yacc.restart()
-        print('Erro sintático: definições incompletas!')
+        raise SyntaxError(" definições incompletas!")
+        #p.restart()
+        #print('Erro sintático: definições incompletas!')
         exit(1)
 
 
@@ -392,5 +394,7 @@ if __name__ == '__main__':
 
     parser = yacc.yacc(debug=True)
     lista = io.open("saida.txt", mode="r", encoding="utf-8")
-    # print(lista.read())
-    print(parser.parse(lista.read()))  # parser = Parser(lista.read())
+    #print(lista.read())
+    #data = "inteiro fatorial(inteiro: n)"
+    print(parser.parse(lista.read()))
+    #print(parser.parse(data))
