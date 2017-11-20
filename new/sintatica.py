@@ -71,7 +71,7 @@ def p_inicializacao_variaveis(p):
 
 def p_lista_variaveis(p):
     '''
-    lista_variaveis : lista_variaveis VIRGULA var
+    lista_variaveis : var VIRGULA lista_variaveis
                     | var
     '''
     if (len(p) == 4):

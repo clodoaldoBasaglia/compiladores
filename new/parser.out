@@ -19,7 +19,7 @@ Rule 5     declaracao -> inicializacao_variaveis
 Rule 6     declaracao -> declaracao_funcao
 Rule 7     declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis
 Rule 8     inicializacao_variaveis -> atribuicao
-Rule 9     lista_variaveis -> lista_variaveis VIRGULA var
+Rule 9     lista_variaveis -> var VIRGULA lista_variaveis
 Rule 10    lista_variaveis -> var
 Rule 11    var -> IDENTIFICADOR
 Rule 12    var -> IDENTIFICADOR indice
@@ -355,7 +355,7 @@ state 14
 state 15
 
     (7) declaracao_variaveis -> tipo DOIS_PONTOS . lista_variaveis
-    (9) lista_variaveis -> . lista_variaveis VIRGULA var
+    (9) lista_variaveis -> . var VIRGULA lista_variaveis
     (10) lista_variaveis -> . var
     (11) var -> . IDENTIFICADOR
     (12) var -> . IDENTIFICADOR indice
@@ -536,7 +536,6 @@ state 21
 state 22
 
     (7) declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .
-    (9) lista_variaveis -> lista_variaveis . VIRGULA var
 
     INTEIRO         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
     FLUTUANTE       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
@@ -554,14 +553,14 @@ state 22
     SUBTRACAO       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
     ATE             reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
     SENAO           reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    VIRGULA         shift and go to state 48
 
 
 state 23
 
+    (9) lista_variaveis -> var . VIRGULA lista_variaveis
     (10) lista_variaveis -> var .
 
-    VIRGULA         reduce using rule 10 (lista_variaveis -> var .)
+    VIRGULA         shift and go to state 48
     INTEIRO         reduce using rule 10 (lista_variaveis -> var .)
     FLUTUANTE       reduce using rule 10 (lista_variaveis -> var .)
     IDENTIFICADOR   reduce using rule 10 (lista_variaveis -> var .)
@@ -1243,13 +1242,16 @@ state 47
 
 state 48
 
-    (9) lista_variaveis -> lista_variaveis VIRGULA . var
+    (9) lista_variaveis -> var VIRGULA . lista_variaveis
+    (9) lista_variaveis -> . var VIRGULA lista_variaveis
+    (10) lista_variaveis -> . var
     (11) var -> . IDENTIFICADOR
     (12) var -> . IDENTIFICADOR indice
 
     IDENTIFICADOR   shift and go to state 24
 
-    var                            shift and go to state 70
+    var                            shift and go to state 23
+    lista_variaveis                shift and go to state 70
 
 state 49
 
@@ -1678,25 +1680,24 @@ state 69
 
 state 70
 
-    (9) lista_variaveis -> lista_variaveis VIRGULA var .
+    (9) lista_variaveis -> var VIRGULA lista_variaveis .
 
-    VIRGULA         reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    INTEIRO         reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    FLUTUANTE       reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    IDENTIFICADOR   reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    $end            reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    FIM             reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    error           reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    SE              reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    REPITA          reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    LEIA            reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    ESCREVA         reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    RETORNA         reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    ABRE_COLXETE    reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    SOMA            reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    SUBTRACAO       reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    ATE             reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
-    SENAO           reduce using rule 9 (lista_variaveis -> lista_variaveis VIRGULA var .)
+    INTEIRO         reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    FLUTUANTE       reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    IDENTIFICADOR   reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    $end            reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    FIM             reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    error           reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    SE              reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    REPITA          reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    LEIA            reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    ESCREVA         reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    RETORNA         reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    ABRE_COLXETE    reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    SOMA            reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    SUBTRACAO       reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    ATE             reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
+    SENAO           reduce using rule 9 (lista_variaveis -> var VIRGULA lista_variaveis .)
 
 
 state 71
