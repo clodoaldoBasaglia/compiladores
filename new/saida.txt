@@ -1,0 +1,6 @@
+LexToken(INTEIRO,'inteiro',5,122)
+LexToken(DOIS_PONTOS,':',5,129)
+LexToken(IDENTIFICADOR,'a',5,131)
+LexToken(FLUTUANTE,'flutuante',6,133)
+LexToken(DOIS_PONTOS,':',6,142)
+LexToken(IDENTIFICADOR,'b',6,144)
