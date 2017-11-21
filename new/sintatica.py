@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import ply.yacc as yacc
-from lexicanum import tokens
+from lexicanum import Lexicanum
 
 
 class Tree:
@@ -20,7 +20,8 @@ class Tree:
 
 class Parser:
     def __init__(self, code):
-        self.tokens = tokens
+        lex = Lexicanum()
+        self.tokens = lex.tokens
         self.precedence = (
             (('left', 'IGUAL', 'NEGACAO', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL', 'MENOR'),
              ('left', 'SOMA', 'SUBTRACAO'),
@@ -197,8 +198,7 @@ class Parser:
         '''
             leia : LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
         '''
-        if len(p):
-            p[0] = Tree('leia', [], p[3])
+        p[0] = Tree('leia', [], p[3])
 
     def p_escreva(self, p):
         '''
@@ -329,15 +329,13 @@ class Parser:
         '''
 
     def p_error(self, p):
+        print(p)
         if p:
-            # print(self,p)
             print("Erro sintático: '%s', linha %d" % (p.value, p.lineno))
-            # raise SyntaxError(" '%s', linha %d" % (p.value, p.lineno))
-            # exit(1)
+            exit(1)
         else:
-            raise SyntaxError(" definições incompletas!")
-            # p.restart()
-            # print('Erro sintático: definições incompletas!')
+            yacc.restart()
+            print('Erro sintático: definições incompletas!')
             exit(1)
 
 
@@ -350,7 +348,7 @@ def prinTree(node, level=" "):
 
 
 if __name__ == '__main__':
-    import sys, io
+    import io
 
     lexemas = io.open("saida.txt", mode="r", encoding="utf-8")
     resultado = io.open("resultado.txt", mode="w", encoding="utf-8")
