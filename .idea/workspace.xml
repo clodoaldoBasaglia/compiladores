@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52091b74-3b44-453b-8a8e-143c9998a9b6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiladores.iml" afterPath="$PROJECT_DIR$/.idea/compiladores.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new/lexicanum.py" afterPath="$PROJECT_DIR$/new/lexicanum.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new/parser.out" afterPath="$PROJECT_DIR$/new/parser.out" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new/parsetab.py" afterPath="$PROJECT_DIR$/new/parsetab.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new/saida.txt" afterPath="$PROJECT_DIR$/new/saida.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new/sintatica.py" afterPath="$PROJECT_DIR$/new/sintatica.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,32 +20,20 @@
       <file leaf-file-name="lexicanum.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new/lexicanum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="185">
+              <caret line="84" column="11" lean-forward="true" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sintatica.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sintatica.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new/sintatica.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="361" column="15" lean-forward="true" selection-start-line="361" selection-start-column="15" selection-end-line="361" selection-end-column="15" />
+            <state relative-caret-position="-276">
+              <caret line="322" column="13" lean-forward="true" selection-start-line="322" selection-start-column="13" selection-end-line="322" selection-end-column="13" />
               <folding>
                 <element signature="e#25#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="asdf.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/testes/asdf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-              <folding>
-                <element signature="e#25#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,6 +71,8 @@
       <find>MENORIGUAL</find>
       <find>MAIORIGUAL</find>
       <find>fator</find>
+      <find>(p)</find>
+      <find>len(self,</find>
     </findStrings>
     <replaceStrings>
       <replace>ID</replace>
@@ -99,6 +88,8 @@
       <replace>FECHA_PARENTESES</replace>
       <replace>MENOR_IGUAL</replace>
       <replace>MAIOR_IGUAL</replace>
+      <replace>(self,p)</replace>
+      <replace>len(</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -113,8 +104,9 @@
         <option value="$PROJECT_DIR$/../compialdoresYudi/Lexica.py" />
         <option value="$PROJECT_DIR$/sintatica.py" />
         <option value="$PROJECT_DIR$/lexicanum.py" />
-        <option value="$PROJECT_DIR$/new/sintatica.py" />
         <option value="$PROJECT_DIR$/testes/asdf.py" />
+        <option value="$PROJECT_DIR$/new/lexicanum.py" />
+        <option value="$PROJECT_DIR$/new/sintatica.py" />
       </list>
     </option>
   </component>
@@ -155,7 +147,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.sintatica">
+  <component name="RunManager" selected="Python.sintatica (1)">
     <configuration name="lexica" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -169,6 +161,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="compiladores" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lexica.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="lexicanum (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="compiladores" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new/lexicanum.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -190,6 +199,23 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
+    <configuration name="sintatica (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="compiladores" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new/sintatica.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="sintatica" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -207,16 +233,20 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="3">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.lexica" />
       <item index="1" class="java.lang.String" itemvalue="Python.sintatica" />
       <item index="2" class="java.lang.String" itemvalue="Python.lexicanum" />
+      <item index="3" class="java.lang.String" itemvalue="Python.lexicanum (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.sintatica (1)" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.sintatica" />
-        <item index="1" class="java.lang.String" itemvalue="Python.lexicanum" />
-        <item index="2" class="java.lang.String" itemvalue="Python.lexica" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.sintatica (1)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.lexicanum (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.sintatica" />
+        <item index="3" class="java.lang.String" itemvalue="Python.lexicanum" />
+        <item index="4" class="java.lang.String" itemvalue="Python.lexica" />
       </list>
     </recent_temporary>
   </component>
@@ -242,7 +272,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861635" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29926237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2984375" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -265,6 +295,34 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/new/lexicanum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new/sintatica.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5370">
+          <caret line="361" column="15" lean-forward="true" selection-start-line="361" selection-start-column="15" selection-end-line="361" selection-end-column="15" />
+          <folding>
+            <element signature="e#25#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes/asdf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1770">
+          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#46#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sintatica.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4777">
@@ -389,30 +447,30 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lexicanum.py" />
+    <entry file="file://$PROJECT_DIR$/testes/asdf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#46#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/new/lexicanum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="185">
+          <caret line="84" column="11" lean-forward="true" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/new/sintatica.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="361" column="15" lean-forward="true" selection-start-line="361" selection-start-column="15" selection-end-line="361" selection-end-column="15" />
+        <state relative-caret-position="-276">
+          <caret line="322" column="13" lean-forward="true" selection-start-line="322" selection-start-column="13" selection-end-line="322" selection-end-column="13" />
           <folding>
             <element signature="e#25#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testes/asdf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#46#0" expanded="true" />
           </folding>
         </state>
       </provider>

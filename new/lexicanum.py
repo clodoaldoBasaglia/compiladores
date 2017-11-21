@@ -18,7 +18,8 @@ palavrasReservadas = {
 }
 tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
           'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA', 'OU_LOGICO',
-          'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE','IDENTIFICADOR', 'E_LOGICO', 'NEGACAO'] + list(palavrasReservadas.values())
+          'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE', 'IDENTIFICADOR', 'E_LOGICO', 'NEGACAO'] + list(
+    palavrasReservadas.values())
 t_SOMA = r'\+'
 t_SUBTRACAO = r'-'
 t_MULTIPLICACAO = r'\*'
@@ -90,10 +91,10 @@ if __name__ == '__main__':
     import sys
 
     # Para compilar no terminal
-    codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
+    # codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
     # para compilar no PyCharm
-    #codigo = io.open("testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
-    saida = io.open("saida.txt",  mode="w", encoding="utf-8")
+    codigo = io.open("../testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
+    saida = io.open("saida.txt", mode="w", encoding="utf-8")
     lexico.input(codigo.read())
     while True:
         token = lexico.token()
