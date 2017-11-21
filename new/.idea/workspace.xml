@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="lexicanum.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lexicanum.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lexicanum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="217">
+              <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -23,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sintatica.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sintatica.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sintatica.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="117">
+              <caret line="210" column="29" lean-forward="false" selection-start-line="210" selection-start-column="22" selection-end-line="210" selection-end-column="29" />
               <folding>
                 <element signature="e#25#48#0" expanded="true" />
               </folding>
@@ -37,10 +37,18 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>new</find>
+      <find>nova</find>
+      <find>retorna</find>
+    </findStrings>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/sintatica.py" />
+        <option value="$PROJECT_DIR$/lexicanum.py" />
       </list>
     </option>
   </component>
@@ -92,6 +100,23 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.sintatica">
+    <configuration name="lexicanum" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="new" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lexicanum.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="sintatica" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -109,9 +134,14 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Python.sintatica" />
+      <item index="1" class="java.lang.String" itemvalue="Python.lexicanum" />
+    </list>
     <recent_temporary>
-      <list size="1">
+      <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Python.sintatica" />
+        <item index="1" class="java.lang.String" itemvalue="Python.lexicanum" />
       </list>
     </recent_temporary>
   </component>
@@ -160,22 +190,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sintatica.py">
+    <entry file="file://$PROJECT_DIR$/lexicanum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="217">
+          <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
           <folding>
-            <element signature="e#25#48#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lexicanum.py">
+    <entry file="file://$PROJECT_DIR$/sintatica.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="117">
+          <caret line="210" column="29" lean-forward="false" selection-start-line="210" selection-start-column="22" selection-end-line="210" selection-end-column="29" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#25#48#0" expanded="true" />
           </folding>
         </state>
       </provider>

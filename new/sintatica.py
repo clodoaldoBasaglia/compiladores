@@ -348,12 +348,15 @@ def prinTree(node, level=" "):
 
 
 if __name__ == '__main__':
-    import io
+    import io, sys
 
-    lexemas = io.open("saida.txt", mode="r", encoding="utf-8")
+    # lexemas = io.open("saida.txt", mode="r", encoding="utf-8")
+    lexemas = io.open(sys.argv[1], mode="r", encoding="utf-8")
     resultado = io.open("resultado.txt", mode="w", encoding="utf-8")
+    # print(Parser(lexemas.read()))
     arvore = Parser(lexemas.read())
-    resultado.write(arvore)
+    prinTree(arvore.ast)
+    resultado.write(str(arvore.ast))
     resultado.close()
     lexemas.close()
     # prinTree(arvore.ast)

@@ -18,7 +18,7 @@ class Lexicanum:
         'repita': 'REPITA',
         'leia': 'LEIA',
         'escreva': 'ESCREVA',
-        'principal': 'PRINCIPAL',
+        # 'principal': 'PRINCIPAL',
         'retorna': 'RETORNA'
     }
     tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
@@ -67,20 +67,23 @@ class Lexicanum:
                 t.lexer.lineno += 1
         pass
 
-    def t_newline(self, t):
+    def t_NOVA_LINHA(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
-        t.type = "NOVA_LINHA"
-        return t
+        # t.type = "NOVA_LINHA"
+        # return t
+
 
     # Ignora tabs e espacos
     t_ignore = ' \t'
+
 
     # Erro
     def t_error(self, t):
         print("Erro '%s', linha %d" % (t.value[0], t.lineno))
         print(type(t.value))
         exit(0)
+
 
     def test(self, code):
         saida = io.open("saida.txt", mode="w", encoding="utf-8")
@@ -93,12 +96,13 @@ class Lexicanum:
             saida.write(str(t) + "\n")
         saida.close()
 
+
 if __name__ == '__main__':
     import sys
 
     # Para compilar no terminal
-    # codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
+    codigo = io.open(sys.argv[1], mode="r", encoding="utf-8")
     # para compilar no PyCharm
-    codigo = io.open("../testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
+    # codigo = io.open("../testes/multiplicavetor.tpp", mode="r", encoding="utf-8")
     lexico = Lexicanum()
     lexico.test(codigo.read())
