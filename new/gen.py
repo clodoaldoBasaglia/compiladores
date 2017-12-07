@@ -16,7 +16,7 @@ class Gen():
 		self.scanf = ir.Function(self.modulo, ir.FunctionType(ir.FloatType(), [ir.FloatType()]), "scanf_f")
 		self.inicioGen(self.tree)
 		# print(self.printf_f)
-		#print(self.modulo)
+		print(self.modulo)
 
 	def inicioGen(self, node):
 		if self.tree.type == "programa_principal":
@@ -75,8 +75,8 @@ class Gen():
 		else:
 			self. declaracao(node.child[0])
 
-	def declaracao(self, node) :
-		if(node.type == "declaracao_se"):
+	def acao(self, node) :
+		if(node.type == "se"):
 			self.se_decl(node.child[0])
 
 		# elif(node.type == "declaracao_repita"):
