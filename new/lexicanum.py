@@ -13,7 +13,7 @@ class Lexicanum:
         'fim': 'FIM',
         'flutuante': 'FLUTUANTE',
         'inteiro': 'INTEIRO',
-        'vazio': 'VAZIO',
+        #'vazio': 'VAZIO',
         'até': 'ATE',
         'repita': 'REPITA',
         'leia': 'LEIA',
@@ -22,8 +22,8 @@ class Lexicanum:
         'retorna': 'RETORNA'
     }
     tokens = ['DIVISAO', 'VIRGULA', 'ATRIBUICAO', 'MENOR', 'MAIOR', 'IGUAL', 'MENOR_IGUAL', 'MAIOR_IGUAL',
-              'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'SOMA', 'SUBTRACAO', 'NOVA_LINHA', 'OU_LOGICO',
-              'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE', 'IDENTIFICADOR', 'E_LOGICO', 'NEGACAO'] + list(
+              'ABRE_PARENTESES', 'FECHA_PARENTESES', 'DOIS_PONTOS', 'SOMA', 'SUBTRACAO',
+              'MULTIPLICACAO', 'ABRE_COLXETE', 'FECHA_COLXETE', 'IDENTIFICADOR', 'NEGACAO'] + list(
         palavrasReservadas.values())
     t_SOMA = r'\+'
     t_SUBTRACAO = r'-'
@@ -41,9 +41,9 @@ class Lexicanum:
     t_DOIS_PONTOS = r':'
     t_ABRE_COLXETE = r'\['
     t_FECHA_COLXETE = r'\]'
-    t_E_LOGICO = r'&&'
+    #t_E_LOGICO = r'&&'
     t_NEGACAO = r'!'
-    t_OU_LOGICO = r'\|\|'
+    #t_OU_LOGICO = r'\|\|'
 
     def t_IDENTIFICADOR(self, t):
         r'[a-zA-Zà-ú][0-9a-zà-úA-Z]*'

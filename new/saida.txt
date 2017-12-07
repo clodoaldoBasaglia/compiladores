@@ -1,6 +1,7 @@
-LexToken(INTEIRO,'inteiro',5,122)
-LexToken(DOIS_PONTOS,':',5,129)
-LexToken(IDENTIFICADOR,'a',5,131)
-LexToken(FLUTUANTE,'flutuante',6,133)
-LexToken(DOIS_PONTOS,':',6,142)
-LexToken(IDENTIFICADOR,'b',6,144)
+; ModuleID = "programaModulo.bc"
+target triple = "unknown-unknown-unknown"
+target datalayout = ""
+
+declare float @"printf_f"(float %".1") 
+
+declare float @"scanf_f"(float %".1") 
