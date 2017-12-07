@@ -13,6 +13,19 @@ class Semantica:
         self.check_utilizadas(self.simbolos)
         self.check_functions(self.simbolos)
 
+
+    def raiz(self):
+        if(self.tree.type == "programa_principal"):
+            self.scope = "principal"
+            self.principal(self.tree.child[0])
+            self.scope = "global"
+        if(self.tree.type == "programa_funcao"):
+            self.func_loop(self.tree.child[0])
+            self.principal(self.tree.child[1])
+        if(self.tree.type == "programa_varglobal"):
+            self.declara_var(self.tree.child[0])
+            self.programa(self.tree.child[1])
+
     def programa(self, node):
         self.lista_declaracoes(node.child[0])
 
