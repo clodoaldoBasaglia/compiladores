@@ -7,32 +7,36 @@ class Generator():
     def __init__(self, code, optz=True, debug=True):
         s = Semantica(code.read())
         s.raiz()
-        
+
         self.tree = s.tree
         self.table = s.simbolos
         self.builder = None
-        self.modulo = ir.Module("programaModulo")
+        self.modulo = ir.Module("programaModulo.bc")
         self.scope = "global"
         self.func = None
+        self.var = None
         self.printf = ir.Function(self.modulo, ir.FunctionType(ir.FloatType(), [ir.FloatType()]), "printf_f")
         self.scanf = ir.Function(self.modulo, ir.FunctionType(ir.FloatType(), [ir.FloatType()]), "scanf_f")
         self.inicioGeneracao(self.tree)
         # print(self.printf_f)
         print(self.modulo)
+        f = io.open("saida.txt", mode="r", encoding="utf-8")
+        f.write(str(self.modulo))
+        f.close()
 
 
     def inicioGeneracao(self, node):
         print("oi")
         if self.tree.type == "programa":
-            self.programa(self.node.child[0])
+            self.principal(self.tree.child[0])
 
 
     def lista_declaracoes(self, node):
         print("oi declaracao")
         if self.tree.type == "declaracao_variaveis":
-            self.declaracao_variaveis(self.node.child[0])
+            self.var(self.node.child[0])
         elif self.tree.type == "inicializacao_variaveis":
-            self.inicializacao_variaveis(self.node.child[0])
+            self.var(self.node.child[0])
 
 
     def principal(self, node):
@@ -40,7 +44,7 @@ class Generator():
         basicBlock = self.func.append_basic_block("entry")
         self.builder = ir.IRBuilder(basicBlock)
         self.scope = "principal"
-        self.sequencia_decl(node.child[0])
+        self.var(self.node.child[0])
         self.builder.ret_void()
         self.scope = "global"
 
@@ -56,6 +60,22 @@ class Generator():
             varGlobal = ir.GlobalVariable(self.modulo, ir.FloatType(32), nome)
             globalVar.initializer = ir.Constant(ir.FloatType(32), 0)
             globalVar.linkage = 'common'
+
+
+    def variavelDecl(self, no):
+        if(self.scope == "global"): #se e global entao declara global variavel
+            if(self.simbolos["global" + "." + no.value]["tipo"] == "inteiro"):
+                self.simbolos[self.scope + "." + no.value]["valor"] = ir.GlobalVariable(self.modulo, ir.IntType(32),self.scope + "." + no.value)
+
+            else:
+                self.simbolos[self.scope + "." + no.value]["valor"] = ir.GlobalVariable(self.modulo, ir.FloatType(), self.scope + "." + no.value)
+
+        else:#nao e variavel global
+            if(self.simbolos[self.scope + "." + no.value]["tipo"] == "inteiro"):
+                self.simbolos[self.scope + "." + no.value]["valor"] = self.builder.alloca(ir.IntType(32), self.scope+"."+no.value)
+            else:
+                self.simbolos[self.scope + "." + no.value]["valor"] = self.builder.alloca(ir.FloatType(), self.scope+"."+no.value)
+
 
 
 if __name__ == "__main__":
