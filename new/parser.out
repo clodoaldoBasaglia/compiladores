@@ -3,9 +3,9 @@ Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     OU_LOGICO
-    VAZIO
     E_LOGICO
     NOVA_LINHA
+    VAZIO
 
 Grammar
 
@@ -179,40 +179,49 @@ state 0
     (11) var -> . IDENTIFICADOR
     (12) var -> . IDENTIFICADOR indice
 
-    INTEIRO         shift and go to state 5
-    FLUTUANTE       shift and go to state 1
+    INTEIRO         shift and go to state 13
+    FLUTUANTE       shift and go to state 5
     IDENTIFICADOR   shift and go to state 6
 
-    declaracao                     shift and go to state 7
-    declaracao_funcao              shift and go to state 2
-    declaracao_variaveis           shift and go to state 9
-    inicializacao_variaveis        shift and go to state 10
-    atribuicao                     shift and go to state 3
-    tipo                           shift and go to state 4
-    cabecalho                      shift and go to state 11
-    programa                       shift and go to state 12
-    var                            shift and go to state 8
-    lista_declaracoes              shift and go to state 13
+    programa                       shift and go to state 1
+    inicializacao_variaveis        shift and go to state 2
+    declaracao                     shift and go to state 11
+    declaracao_funcao              shift and go to state 10
+    var                            shift and go to state 12
+    tipo                           shift and go to state 3
+    declaracao_variaveis           shift and go to state 8
+    lista_declaracoes              shift and go to state 7
+    atribuicao                     shift and go to state 4
+    cabecalho                      shift and go to state 9
 
 state 1
 
-    (16) tipo -> FLUTUANTE .
+    (0) S' -> programa .
 
-    DOIS_PONTOS     reduce using rule 16 (tipo -> FLUTUANTE .)
-    IDENTIFICADOR   reduce using rule 16 (tipo -> FLUTUANTE .)
 
 
 state 2
 
-    (6) declaracao -> declaracao_funcao .
+    (5) declaracao -> inicializacao_variaveis .
 
-    INTEIRO         reduce using rule 6 (declaracao -> declaracao_funcao .)
-    FLUTUANTE       reduce using rule 6 (declaracao -> declaracao_funcao .)
-    IDENTIFICADOR   reduce using rule 6 (declaracao -> declaracao_funcao .)
-    $end            reduce using rule 6 (declaracao -> declaracao_funcao .)
+    INTEIRO         reduce using rule 5 (declaracao -> inicializacao_variaveis .)
+    FLUTUANTE       reduce using rule 5 (declaracao -> inicializacao_variaveis .)
+    IDENTIFICADOR   reduce using rule 5 (declaracao -> inicializacao_variaveis .)
+    $end            reduce using rule 5 (declaracao -> inicializacao_variaveis .)
 
 
 state 3
+
+    (7) declaracao_variaveis -> tipo . DOIS_PONTOS lista_variaveis
+    (17) declaracao_funcao -> tipo . cabecalho
+    (19) cabecalho -> . IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
+
+    DOIS_PONTOS     shift and go to state 14
+    IDENTIFICADOR   shift and go to state 15
+
+    cabecalho                      shift and go to state 16
+
+state 4
 
     (8) inicializacao_variaveis -> atribuicao .
 
@@ -222,23 +231,12 @@ state 3
     $end            reduce using rule 8 (inicializacao_variaveis -> atribuicao .)
 
 
-state 4
-
-    (7) declaracao_variaveis -> tipo . DOIS_PONTOS lista_variaveis
-    (17) declaracao_funcao -> tipo . cabecalho
-    (19) cabecalho -> . IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM
-
-    DOIS_PONTOS     shift and go to state 16
-    IDENTIFICADOR   shift and go to state 15
-
-    cabecalho                      shift and go to state 14
-
 state 5
 
-    (15) tipo -> INTEIRO .
+    (16) tipo -> FLUTUANTE .
 
-    DOIS_PONTOS     reduce using rule 15 (tipo -> INTEIRO .)
-    IDENTIFICADOR   reduce using rule 15 (tipo -> INTEIRO .)
+    DOIS_PONTOS     reduce using rule 16 (tipo -> FLUTUANTE .)
+    IDENTIFICADOR   reduce using rule 16 (tipo -> FLUTUANTE .)
 
 
 state 6
@@ -257,59 +255,6 @@ state 6
 
 state 7
 
-    (3) lista_declaracoes -> declaracao .
-
-    INTEIRO         reduce using rule 3 (lista_declaracoes -> declaracao .)
-    FLUTUANTE       reduce using rule 3 (lista_declaracoes -> declaracao .)
-    IDENTIFICADOR   reduce using rule 3 (lista_declaracoes -> declaracao .)
-    $end            reduce using rule 3 (lista_declaracoes -> declaracao .)
-
-
-state 8
-
-    (38) atribuicao -> var . ATRIBUICAO expressao
-
-    ATRIBUICAO      shift and go to state 20
-
-
-state 9
-
-    (4) declaracao -> declaracao_variaveis .
-
-    INTEIRO         reduce using rule 4 (declaracao -> declaracao_variaveis .)
-    FLUTUANTE       reduce using rule 4 (declaracao -> declaracao_variaveis .)
-    IDENTIFICADOR   reduce using rule 4 (declaracao -> declaracao_variaveis .)
-    $end            reduce using rule 4 (declaracao -> declaracao_variaveis .)
-
-
-state 10
-
-    (5) declaracao -> inicializacao_variaveis .
-
-    INTEIRO         reduce using rule 5 (declaracao -> inicializacao_variaveis .)
-    FLUTUANTE       reduce using rule 5 (declaracao -> inicializacao_variaveis .)
-    IDENTIFICADOR   reduce using rule 5 (declaracao -> inicializacao_variaveis .)
-    $end            reduce using rule 5 (declaracao -> inicializacao_variaveis .)
-
-
-state 11
-
-    (18) declaracao_funcao -> cabecalho .
-
-    INTEIRO         reduce using rule 18 (declaracao_funcao -> cabecalho .)
-    FLUTUANTE       reduce using rule 18 (declaracao_funcao -> cabecalho .)
-    IDENTIFICADOR   reduce using rule 18 (declaracao_funcao -> cabecalho .)
-    $end            reduce using rule 18 (declaracao_funcao -> cabecalho .)
-
-
-state 12
-
-    (0) S' -> programa .
-
-
-
-state 13
-
     (1) programa -> lista_declaracoes .
     (2) lista_declaracoes -> lista_declaracoes . declaracao
     (4) declaracao -> . declaracao_variaveis
@@ -327,28 +272,86 @@ state 13
     (12) var -> . IDENTIFICADOR indice
 
     $end            reduce using rule 1 (programa -> lista_declaracoes .)
-    INTEIRO         shift and go to state 5
-    FLUTUANTE       shift and go to state 1
+    INTEIRO         shift and go to state 13
+    FLUTUANTE       shift and go to state 5
     IDENTIFICADOR   shift and go to state 6
 
-    declaracao                     shift and go to state 21
-    declaracao_funcao              shift and go to state 2
-    declaracao_variaveis           shift and go to state 9
-    inicializacao_variaveis        shift and go to state 10
-    atribuicao                     shift and go to state 3
-    tipo                           shift and go to state 4
-    cabecalho                      shift and go to state 11
-    var                            shift and go to state 8
+    cabecalho                      shift and go to state 9
+    inicializacao_variaveis        shift and go to state 2
+    declaracao_funcao              shift and go to state 10
+    var                            shift and go to state 12
+    tipo                           shift and go to state 3
+    declaracao_variaveis           shift and go to state 8
+    declaracao                     shift and go to state 20
+    atribuicao                     shift and go to state 4
+
+state 8
+
+    (4) declaracao -> declaracao_variaveis .
+
+    INTEIRO         reduce using rule 4 (declaracao -> declaracao_variaveis .)
+    FLUTUANTE       reduce using rule 4 (declaracao -> declaracao_variaveis .)
+    IDENTIFICADOR   reduce using rule 4 (declaracao -> declaracao_variaveis .)
+    $end            reduce using rule 4 (declaracao -> declaracao_variaveis .)
+
+
+state 9
+
+    (18) declaracao_funcao -> cabecalho .
+
+    INTEIRO         reduce using rule 18 (declaracao_funcao -> cabecalho .)
+    FLUTUANTE       reduce using rule 18 (declaracao_funcao -> cabecalho .)
+    IDENTIFICADOR   reduce using rule 18 (declaracao_funcao -> cabecalho .)
+    $end            reduce using rule 18 (declaracao_funcao -> cabecalho .)
+
+
+state 10
+
+    (6) declaracao -> declaracao_funcao .
+
+    INTEIRO         reduce using rule 6 (declaracao -> declaracao_funcao .)
+    FLUTUANTE       reduce using rule 6 (declaracao -> declaracao_funcao .)
+    IDENTIFICADOR   reduce using rule 6 (declaracao -> declaracao_funcao .)
+    $end            reduce using rule 6 (declaracao -> declaracao_funcao .)
+
+
+state 11
+
+    (3) lista_declaracoes -> declaracao .
+
+    INTEIRO         reduce using rule 3 (lista_declaracoes -> declaracao .)
+    FLUTUANTE       reduce using rule 3 (lista_declaracoes -> declaracao .)
+    IDENTIFICADOR   reduce using rule 3 (lista_declaracoes -> declaracao .)
+    $end            reduce using rule 3 (lista_declaracoes -> declaracao .)
+
+
+state 12
+
+    (38) atribuicao -> var . ATRIBUICAO expressao
+
+    ATRIBUICAO      shift and go to state 21
+
+
+state 13
+
+    (15) tipo -> INTEIRO .
+
+    DOIS_PONTOS     reduce using rule 15 (tipo -> INTEIRO .)
+    IDENTIFICADOR   reduce using rule 15 (tipo -> INTEIRO .)
+
 
 state 14
 
-    (17) declaracao_funcao -> tipo cabecalho .
+    (7) declaracao_variaveis -> tipo DOIS_PONTOS . lista_variaveis
+    (9) lista_variaveis -> . var VIRGULA lista_variaveis
+    (10) lista_variaveis -> . var
+    (11) var -> . IDENTIFICADOR
+    (12) var -> . IDENTIFICADOR indice
 
-    INTEIRO         reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
-    FLUTUANTE       reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
-    IDENTIFICADOR   reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
-    $end            reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
+    IDENTIFICADOR   shift and go to state 22
 
+    lista_variaveis                shift and go to state 24
+    var                            shift and go to state 23
 
 state 15
 
@@ -359,16 +362,13 @@ state 15
 
 state 16
 
-    (7) declaracao_variaveis -> tipo DOIS_PONTOS . lista_variaveis
-    (9) lista_variaveis -> . var VIRGULA lista_variaveis
-    (10) lista_variaveis -> . var
-    (11) var -> . IDENTIFICADOR
-    (12) var -> . IDENTIFICADOR indice
+    (17) declaracao_funcao -> tipo cabecalho .
 
-    IDENTIFICADOR   shift and go to state 23
+    INTEIRO         reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
+    FLUTUANTE       reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
+    IDENTIFICADOR   reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
+    $end            reduce using rule 17 (declaracao_funcao -> tipo cabecalho .)
 
-    var                            shift and go to state 24
-    lista_variaveis                shift and go to state 22
 
 state 17
 
@@ -396,24 +396,24 @@ state 17
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    expressao                      shift and go to state 40
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 41
 
 state 18
 
@@ -421,6 +421,7 @@ state 18
     (13) indice -> indice . ABRE_COLXETE expressao FECHA_COLXETE
 
   ! shift/reduce conflict for ABRE_COLXETE resolved as shift
+    ATRIBUICAO      reduce using rule 12 (var -> IDENTIFICADOR indice .)
     MULTIPLICACAO   reduce using rule 12 (var -> IDENTIFICADOR indice .)
     DIVISAO         reduce using rule 12 (var -> IDENTIFICADOR indice .)
     MENOR           reduce using rule 12 (var -> IDENTIFICADOR indice .)
@@ -429,26 +430,25 @@ state 18
     MENOR_IGUAL     reduce using rule 12 (var -> IDENTIFICADOR indice .)
     MAIOR_IGUAL     reduce using rule 12 (var -> IDENTIFICADOR indice .)
     NEGACAO         reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    FECHA_COLXETE   reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    INTEIRO         reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    FLUTUANTE       reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    IDENTIFICADOR   reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    $end            reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    FECHA_PARENTESES reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    VIRGULA         reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    FIM             reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    ATE             reduce using rule 12 (var -> IDENTIFICADOR indice .)
     error           reduce using rule 12 (var -> IDENTIFICADOR indice .)
     SE              reduce using rule 12 (var -> IDENTIFICADOR indice .)
     REPITA          reduce using rule 12 (var -> IDENTIFICADOR indice .)
     LEIA            reduce using rule 12 (var -> IDENTIFICADOR indice .)
     ESCREVA         reduce using rule 12 (var -> IDENTIFICADOR indice .)
     RETORNA         reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    INTEIRO         reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    FLUTUANTE       reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    IDENTIFICADOR   reduce using rule 12 (var -> IDENTIFICADOR indice .)
     SOMA            reduce using rule 12 (var -> IDENTIFICADOR indice .)
     SUBTRACAO       reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    $end            reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    FECHA_COLXETE   reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    FECHA_PARENTESES reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    VIRGULA         reduce using rule 12 (var -> IDENTIFICADOR indice .)
+    FIM             reduce using rule 12 (var -> IDENTIFICADOR indice .)
     ENTAO           reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    ATE             reduce using rule 12 (var -> IDENTIFICADOR indice .)
     SENAO           reduce using rule 12 (var -> IDENTIFICADOR indice .)
-    ATRIBUICAO      reduce using rule 12 (var -> IDENTIFICADOR indice .)
     ABRE_COLXETE    shift and go to state 42
 
   ! ABRE_COLXETE    [ reduce using rule 12 (var -> IDENTIFICADOR indice .) ]
@@ -468,15 +468,25 @@ state 19
 
     FECHA_PARENTESES reduce using rule 72 (vazio -> .)
     VIRGULA         reduce using rule 72 (vazio -> .)
-    INTEIRO         shift and go to state 5
-    FLUTUANTE       shift and go to state 1
+    INTEIRO         shift and go to state 13
+    FLUTUANTE       shift and go to state 5
 
-    tipo                           shift and go to state 44
-    lista_parametros               shift and go to state 45
-    vazio                          shift and go to state 43
-    parametro                      shift and go to state 46
+    vazio                          shift and go to state 44
+    lista_parametros               shift and go to state 46
+    parametro                      shift and go to state 43
+    tipo                           shift and go to state 45
 
 state 20
+
+    (2) lista_declaracoes -> lista_declaracoes declaracao .
+
+    INTEIRO         reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+    FLUTUANTE       reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+    IDENTIFICADOR   reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+    $end            reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+
+
+state 21
 
     (38) atribuicao -> var ATRIBUICAO . expressao
     (42) expressao -> . expressao_simples
@@ -502,58 +512,26 @@ state 20
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 47
-    operador_soma                  shift and go to state 34
-
-state 21
-
-    (2) lista_declaracoes -> lista_declaracoes declaracao .
-
-    INTEIRO         reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
-    FLUTUANTE       reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
-    IDENTIFICADOR   reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
-    $end            reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
-
 
 state 22
-
-    (7) declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .
-
-    INTEIRO         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    FLUTUANTE       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    IDENTIFICADOR   reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    $end            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    ATE             reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    error           reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    SE              reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    REPITA          reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    LEIA            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    ESCREVA         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    RETORNA         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    ABRE_COLXETE    reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    SOMA            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    SUBTRACAO       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    FIM             reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-    SENAO           reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
-
-
-state 23
 
     (11) var -> IDENTIFICADOR .
     (12) var -> IDENTIFICADOR . indice
@@ -583,7 +561,7 @@ state 23
 
     indice                         shift and go to state 18
 
-state 24
+state 23
 
     (9) lista_variaveis -> var . VIRGULA lista_variaveis
     (10) lista_variaveis -> var .
@@ -607,141 +585,29 @@ state 24
     SENAO           reduce using rule 10 (lista_variaveis -> var .)
 
 
+state 24
+
+    (7) declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .
+
+    FIM             reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    error           reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    SE              reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    REPITA          reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    LEIA            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    ESCREVA         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    RETORNA         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    INTEIRO         reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    FLUTUANTE       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    IDENTIFICADOR   reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    ABRE_COLXETE    reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    SOMA            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    SUBTRACAO       reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    SENAO           reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    ATE             reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+    $end            reduce using rule 7 (declaracao_variaveis -> tipo DOIS_PONTOS lista_variaveis .)
+
+
 state 25
-
-    (67) numero -> FLUTUANTE .
-
-    MULTIPLICACAO   reduce using rule 67 (numero -> FLUTUANTE .)
-    DIVISAO         reduce using rule 67 (numero -> FLUTUANTE .)
-    MENOR           reduce using rule 67 (numero -> FLUTUANTE .)
-    MAIOR           reduce using rule 67 (numero -> FLUTUANTE .)
-    IGUAL           reduce using rule 67 (numero -> FLUTUANTE .)
-    MENOR_IGUAL     reduce using rule 67 (numero -> FLUTUANTE .)
-    MAIOR_IGUAL     reduce using rule 67 (numero -> FLUTUANTE .)
-    NEGACAO         reduce using rule 67 (numero -> FLUTUANTE .)
-    FECHA_COLXETE   reduce using rule 67 (numero -> FLUTUANTE .)
-    INTEIRO         reduce using rule 67 (numero -> FLUTUANTE .)
-    FLUTUANTE       reduce using rule 67 (numero -> FLUTUANTE .)
-    IDENTIFICADOR   reduce using rule 67 (numero -> FLUTUANTE .)
-    $end            reduce using rule 67 (numero -> FLUTUANTE .)
-    FECHA_PARENTESES reduce using rule 67 (numero -> FLUTUANTE .)
-    VIRGULA         reduce using rule 67 (numero -> FLUTUANTE .)
-    FIM             reduce using rule 67 (numero -> FLUTUANTE .)
-    error           reduce using rule 67 (numero -> FLUTUANTE .)
-    SE              reduce using rule 67 (numero -> FLUTUANTE .)
-    REPITA          reduce using rule 67 (numero -> FLUTUANTE .)
-    LEIA            reduce using rule 67 (numero -> FLUTUANTE .)
-    ESCREVA         reduce using rule 67 (numero -> FLUTUANTE .)
-    RETORNA         reduce using rule 67 (numero -> FLUTUANTE .)
-    ABRE_COLXETE    reduce using rule 67 (numero -> FLUTUANTE .)
-    SOMA            reduce using rule 67 (numero -> FLUTUANTE .)
-    SUBTRACAO       reduce using rule 67 (numero -> FLUTUANTE .)
-    ENTAO           reduce using rule 67 (numero -> FLUTUANTE .)
-    ATE             reduce using rule 67 (numero -> FLUTUANTE .)
-    SENAO           reduce using rule 67 (numero -> FLUTUANTE .)
-
-
-state 26
-
-    (66) numero -> INTEIRO .
-
-    MULTIPLICACAO   reduce using rule 66 (numero -> INTEIRO .)
-    DIVISAO         reduce using rule 66 (numero -> INTEIRO .)
-    MENOR           reduce using rule 66 (numero -> INTEIRO .)
-    MAIOR           reduce using rule 66 (numero -> INTEIRO .)
-    IGUAL           reduce using rule 66 (numero -> INTEIRO .)
-    MENOR_IGUAL     reduce using rule 66 (numero -> INTEIRO .)
-    MAIOR_IGUAL     reduce using rule 66 (numero -> INTEIRO .)
-    NEGACAO         reduce using rule 66 (numero -> INTEIRO .)
-    FECHA_COLXETE   reduce using rule 66 (numero -> INTEIRO .)
-    INTEIRO         reduce using rule 66 (numero -> INTEIRO .)
-    FLUTUANTE       reduce using rule 66 (numero -> INTEIRO .)
-    IDENTIFICADOR   reduce using rule 66 (numero -> INTEIRO .)
-    $end            reduce using rule 66 (numero -> INTEIRO .)
-    FECHA_PARENTESES reduce using rule 66 (numero -> INTEIRO .)
-    VIRGULA         reduce using rule 66 (numero -> INTEIRO .)
-    FIM             reduce using rule 66 (numero -> INTEIRO .)
-    error           reduce using rule 66 (numero -> INTEIRO .)
-    SE              reduce using rule 66 (numero -> INTEIRO .)
-    REPITA          reduce using rule 66 (numero -> INTEIRO .)
-    LEIA            reduce using rule 66 (numero -> INTEIRO .)
-    ESCREVA         reduce using rule 66 (numero -> INTEIRO .)
-    RETORNA         reduce using rule 66 (numero -> INTEIRO .)
-    ABRE_COLXETE    reduce using rule 66 (numero -> INTEIRO .)
-    SOMA            reduce using rule 66 (numero -> INTEIRO .)
-    SUBTRACAO       reduce using rule 66 (numero -> INTEIRO .)
-    ENTAO           reduce using rule 66 (numero -> INTEIRO .)
-    ATE             reduce using rule 66 (numero -> INTEIRO .)
-    SENAO           reduce using rule 66 (numero -> INTEIRO .)
-
-
-state 27
-
-    (43) expressao -> atribuicao .
-
-    FIM             reduce using rule 43 (expressao -> atribuicao .)
-    error           reduce using rule 43 (expressao -> atribuicao .)
-    SE              reduce using rule 43 (expressao -> atribuicao .)
-    REPITA          reduce using rule 43 (expressao -> atribuicao .)
-    LEIA            reduce using rule 43 (expressao -> atribuicao .)
-    ESCREVA         reduce using rule 43 (expressao -> atribuicao .)
-    RETORNA         reduce using rule 43 (expressao -> atribuicao .)
-    INTEIRO         reduce using rule 43 (expressao -> atribuicao .)
-    FLUTUANTE       reduce using rule 43 (expressao -> atribuicao .)
-    IDENTIFICADOR   reduce using rule 43 (expressao -> atribuicao .)
-    ABRE_COLXETE    reduce using rule 43 (expressao -> atribuicao .)
-    SOMA            reduce using rule 43 (expressao -> atribuicao .)
-    SUBTRACAO       reduce using rule 43 (expressao -> atribuicao .)
-    FECHA_PARENTESES reduce using rule 43 (expressao -> atribuicao .)
-    ATE             reduce using rule 43 (expressao -> atribuicao .)
-    SENAO           reduce using rule 43 (expressao -> atribuicao .)
-    VIRGULA         reduce using rule 43 (expressao -> atribuicao .)
-    FECHA_COLXETE   reduce using rule 43 (expressao -> atribuicao .)
-    $end            reduce using rule 43 (expressao -> atribuicao .)
-    ENTAO           reduce using rule 43 (expressao -> atribuicao .)
-
-
-state 28
-
-    (42) expressao -> expressao_simples .
-    (45) expressao_simples -> expressao_simples . operador_relacional expressao_aditiva
-    (52) operador_relacional -> . MENOR
-    (53) operador_relacional -> . MAIOR
-    (54) operador_relacional -> . IGUAL
-    (55) operador_relacional -> . MENOR_IGUAL
-    (56) operador_relacional -> . MAIOR_IGUAL
-    (57) operador_relacional -> . NEGACAO
-
-    FIM             reduce using rule 42 (expressao -> expressao_simples .)
-    error           reduce using rule 42 (expressao -> expressao_simples .)
-    SE              reduce using rule 42 (expressao -> expressao_simples .)
-    REPITA          reduce using rule 42 (expressao -> expressao_simples .)
-    LEIA            reduce using rule 42 (expressao -> expressao_simples .)
-    ESCREVA         reduce using rule 42 (expressao -> expressao_simples .)
-    RETORNA         reduce using rule 42 (expressao -> expressao_simples .)
-    INTEIRO         reduce using rule 42 (expressao -> expressao_simples .)
-    FLUTUANTE       reduce using rule 42 (expressao -> expressao_simples .)
-    IDENTIFICADOR   reduce using rule 42 (expressao -> expressao_simples .)
-    ABRE_COLXETE    reduce using rule 42 (expressao -> expressao_simples .)
-    SOMA            reduce using rule 42 (expressao -> expressao_simples .)
-    SUBTRACAO       reduce using rule 42 (expressao -> expressao_simples .)
-    FECHA_PARENTESES reduce using rule 42 (expressao -> expressao_simples .)
-    ATE             reduce using rule 42 (expressao -> expressao_simples .)
-    SENAO           reduce using rule 42 (expressao -> expressao_simples .)
-    VIRGULA         reduce using rule 42 (expressao -> expressao_simples .)
-    FECHA_COLXETE   reduce using rule 42 (expressao -> expressao_simples .)
-    $end            reduce using rule 42 (expressao -> expressao_simples .)
-    ENTAO           reduce using rule 42 (expressao -> expressao_simples .)
-    MENOR           shift and go to state 50
-    MAIOR           shift and go to state 54
-    IGUAL           shift and go to state 51
-    MENOR_IGUAL     shift and go to state 55
-    MAIOR_IGUAL     shift and go to state 49
-    NEGACAO         shift and go to state 53
-
-    operador_relacional            shift and go to state 52
-
-state 29
 
     (46) expressao_aditiva -> expressao_multiplicativa .
     (49) expressao_multiplicativa -> expressao_multiplicativa . operador_multiplicacao expressao_unaria
@@ -756,11 +622,11 @@ state 29
     MENOR_IGUAL     reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     MAIOR_IGUAL     reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     NEGACAO         reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
+    FECHA_COLXETE   reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     INTEIRO         reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     FLUTUANTE       reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     IDENTIFICADOR   reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     $end            reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
-    FECHA_COLXETE   reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     FECHA_PARENTESES reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     VIRGULA         reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     FIM             reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
@@ -776,132 +642,60 @@ state 29
     ENTAO           reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     ATE             reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
     SENAO           reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .)
-    MULTIPLICACAO   shift and go to state 56
-    DIVISAO         shift and go to state 58
+    MULTIPLICACAO   shift and go to state 50
+    DIVISAO         shift and go to state 51
 
   ! MULTIPLICACAO   [ reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .) ]
   ! DIVISAO         [ reduce using rule 46 (expressao_aditiva -> expressao_multiplicativa .) ]
 
-    operador_multiplicacao         shift and go to state 57
+    operador_multiplicacao         shift and go to state 49
 
-state 30
+state 26
 
-    (64) fator -> chamada_funcao .
+    (42) expressao -> expressao_simples .
+    (45) expressao_simples -> expressao_simples . operador_relacional expressao_aditiva
+    (52) operador_relacional -> . MENOR
+    (53) operador_relacional -> . MAIOR
+    (54) operador_relacional -> . IGUAL
+    (55) operador_relacional -> . MENOR_IGUAL
+    (56) operador_relacional -> . MAIOR_IGUAL
+    (57) operador_relacional -> . NEGACAO
 
-    MULTIPLICACAO   reduce using rule 64 (fator -> chamada_funcao .)
-    DIVISAO         reduce using rule 64 (fator -> chamada_funcao .)
-    MENOR           reduce using rule 64 (fator -> chamada_funcao .)
-    MAIOR           reduce using rule 64 (fator -> chamada_funcao .)
-    IGUAL           reduce using rule 64 (fator -> chamada_funcao .)
-    MENOR_IGUAL     reduce using rule 64 (fator -> chamada_funcao .)
-    MAIOR_IGUAL     reduce using rule 64 (fator -> chamada_funcao .)
-    NEGACAO         reduce using rule 64 (fator -> chamada_funcao .)
-    INTEIRO         reduce using rule 64 (fator -> chamada_funcao .)
-    FLUTUANTE       reduce using rule 64 (fator -> chamada_funcao .)
-    IDENTIFICADOR   reduce using rule 64 (fator -> chamada_funcao .)
-    $end            reduce using rule 64 (fator -> chamada_funcao .)
-    FECHA_COLXETE   reduce using rule 64 (fator -> chamada_funcao .)
-    FECHA_PARENTESES reduce using rule 64 (fator -> chamada_funcao .)
-    VIRGULA         reduce using rule 64 (fator -> chamada_funcao .)
-    FIM             reduce using rule 64 (fator -> chamada_funcao .)
-    error           reduce using rule 64 (fator -> chamada_funcao .)
-    SE              reduce using rule 64 (fator -> chamada_funcao .)
-    REPITA          reduce using rule 64 (fator -> chamada_funcao .)
-    LEIA            reduce using rule 64 (fator -> chamada_funcao .)
-    ESCREVA         reduce using rule 64 (fator -> chamada_funcao .)
-    RETORNA         reduce using rule 64 (fator -> chamada_funcao .)
-    ABRE_COLXETE    reduce using rule 64 (fator -> chamada_funcao .)
-    SOMA            reduce using rule 64 (fator -> chamada_funcao .)
-    SUBTRACAO       reduce using rule 64 (fator -> chamada_funcao .)
-    ENTAO           reduce using rule 64 (fator -> chamada_funcao .)
-    ATE             reduce using rule 64 (fator -> chamada_funcao .)
-    SENAO           reduce using rule 64 (fator -> chamada_funcao .)
+    FECHA_COLXETE   reduce using rule 42 (expressao -> expressao_simples .)
+    FIM             reduce using rule 42 (expressao -> expressao_simples .)
+    error           reduce using rule 42 (expressao -> expressao_simples .)
+    SE              reduce using rule 42 (expressao -> expressao_simples .)
+    REPITA          reduce using rule 42 (expressao -> expressao_simples .)
+    LEIA            reduce using rule 42 (expressao -> expressao_simples .)
+    ESCREVA         reduce using rule 42 (expressao -> expressao_simples .)
+    RETORNA         reduce using rule 42 (expressao -> expressao_simples .)
+    INTEIRO         reduce using rule 42 (expressao -> expressao_simples .)
+    FLUTUANTE       reduce using rule 42 (expressao -> expressao_simples .)
+    IDENTIFICADOR   reduce using rule 42 (expressao -> expressao_simples .)
+    ABRE_COLXETE    reduce using rule 42 (expressao -> expressao_simples .)
+    SOMA            reduce using rule 42 (expressao -> expressao_simples .)
+    SUBTRACAO       reduce using rule 42 (expressao -> expressao_simples .)
+    $end            reduce using rule 42 (expressao -> expressao_simples .)
+    FECHA_PARENTESES reduce using rule 42 (expressao -> expressao_simples .)
+    VIRGULA         reduce using rule 42 (expressao -> expressao_simples .)
+    ENTAO           reduce using rule 42 (expressao -> expressao_simples .)
+    ATE             reduce using rule 42 (expressao -> expressao_simples .)
+    SENAO           reduce using rule 42 (expressao -> expressao_simples .)
+    MENOR           shift and go to state 53
+    MAIOR           shift and go to state 58
+    IGUAL           shift and go to state 54
+    MENOR_IGUAL     shift and go to state 57
+    MAIOR_IGUAL     shift and go to state 55
+    NEGACAO         shift and go to state 56
 
+    operador_relacional            shift and go to state 52
 
-state 31
-
-    (48) expressao_multiplicativa -> expressao_unaria .
-
-    MULTIPLICACAO   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    DIVISAO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    MENOR           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    MAIOR           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    IGUAL           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    MENOR_IGUAL     reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    MAIOR_IGUAL     reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    NEGACAO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    ENTAO           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    FIM             reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    SENAO           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    error           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    SE              reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    REPITA          reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    LEIA            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    ESCREVA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    RETORNA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    INTEIRO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    FLUTUANTE       reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    IDENTIFICADOR   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    ABRE_COLXETE    reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    SOMA            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    SUBTRACAO       reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    $end            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    FECHA_COLXETE   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    FECHA_PARENTESES reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    VIRGULA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-    ATE             reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
-
-
-state 32
-
-    (11) var -> IDENTIFICADOR .
-    (12) var -> IDENTIFICADOR . indice
-    (68) chamada_funcao -> IDENTIFICADOR . ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
-    (13) indice -> . indice ABRE_COLXETE expressao FECHA_COLXETE
-    (14) indice -> . ABRE_COLXETE expressao FECHA_COLXETE
-
-  ! shift/reduce conflict for ABRE_COLXETE resolved as shift
-    MULTIPLICACAO   reduce using rule 11 (var -> IDENTIFICADOR .)
-    DIVISAO         reduce using rule 11 (var -> IDENTIFICADOR .)
-    MENOR           reduce using rule 11 (var -> IDENTIFICADOR .)
-    MAIOR           reduce using rule 11 (var -> IDENTIFICADOR .)
-    IGUAL           reduce using rule 11 (var -> IDENTIFICADOR .)
-    MENOR_IGUAL     reduce using rule 11 (var -> IDENTIFICADOR .)
-    MAIOR_IGUAL     reduce using rule 11 (var -> IDENTIFICADOR .)
-    NEGACAO         reduce using rule 11 (var -> IDENTIFICADOR .)
-    FECHA_COLXETE   reduce using rule 11 (var -> IDENTIFICADOR .)
-    INTEIRO         reduce using rule 11 (var -> IDENTIFICADOR .)
-    FLUTUANTE       reduce using rule 11 (var -> IDENTIFICADOR .)
-    IDENTIFICADOR   reduce using rule 11 (var -> IDENTIFICADOR .)
-    $end            reduce using rule 11 (var -> IDENTIFICADOR .)
-    FECHA_PARENTESES reduce using rule 11 (var -> IDENTIFICADOR .)
-    VIRGULA         reduce using rule 11 (var -> IDENTIFICADOR .)
-    FIM             reduce using rule 11 (var -> IDENTIFICADOR .)
-    error           reduce using rule 11 (var -> IDENTIFICADOR .)
-    SE              reduce using rule 11 (var -> IDENTIFICADOR .)
-    REPITA          reduce using rule 11 (var -> IDENTIFICADOR .)
-    LEIA            reduce using rule 11 (var -> IDENTIFICADOR .)
-    ESCREVA         reduce using rule 11 (var -> IDENTIFICADOR .)
-    RETORNA         reduce using rule 11 (var -> IDENTIFICADOR .)
-    SOMA            reduce using rule 11 (var -> IDENTIFICADOR .)
-    SUBTRACAO       reduce using rule 11 (var -> IDENTIFICADOR .)
-    ENTAO           reduce using rule 11 (var -> IDENTIFICADOR .)
-    ATE             reduce using rule 11 (var -> IDENTIFICADOR .)
-    SENAO           reduce using rule 11 (var -> IDENTIFICADOR .)
-    ATRIBUICAO      reduce using rule 11 (var -> IDENTIFICADOR .)
-    ABRE_PARENTESES shift and go to state 59
-    ABRE_COLXETE    shift and go to state 17
-
-  ! ABRE_COLXETE    [ reduce using rule 11 (var -> IDENTIFICADOR .) ]
-
-    indice                         shift and go to state 18
-
-state 33
+state 27
 
     (38) atribuicao -> var . ATRIBUICAO expressao
     (63) fator -> var .
 
-    ATRIBUICAO      shift and go to state 20
+    ATRIBUICAO      shift and go to state 21
     MULTIPLICACAO   reduce using rule 63 (fator -> var .)
     DIVISAO         reduce using rule 63 (fator -> var .)
     MENOR           reduce using rule 63 (fator -> var .)
@@ -910,52 +704,29 @@ state 33
     MENOR_IGUAL     reduce using rule 63 (fator -> var .)
     MAIOR_IGUAL     reduce using rule 63 (fator -> var .)
     NEGACAO         reduce using rule 63 (fator -> var .)
-    INTEIRO         reduce using rule 63 (fator -> var .)
-    FLUTUANTE       reduce using rule 63 (fator -> var .)
-    IDENTIFICADOR   reduce using rule 63 (fator -> var .)
-    $end            reduce using rule 63 (fator -> var .)
-    FECHA_COLXETE   reduce using rule 63 (fator -> var .)
     FECHA_PARENTESES reduce using rule 63 (fator -> var .)
     VIRGULA         reduce using rule 63 (fator -> var .)
+    FECHA_COLXETE   reduce using rule 63 (fator -> var .)
     FIM             reduce using rule 63 (fator -> var .)
+    SENAO           reduce using rule 63 (fator -> var .)
     error           reduce using rule 63 (fator -> var .)
     SE              reduce using rule 63 (fator -> var .)
     REPITA          reduce using rule 63 (fator -> var .)
     LEIA            reduce using rule 63 (fator -> var .)
     ESCREVA         reduce using rule 63 (fator -> var .)
     RETORNA         reduce using rule 63 (fator -> var .)
+    INTEIRO         reduce using rule 63 (fator -> var .)
+    FLUTUANTE       reduce using rule 63 (fator -> var .)
+    IDENTIFICADOR   reduce using rule 63 (fator -> var .)
     ABRE_COLXETE    reduce using rule 63 (fator -> var .)
     SOMA            reduce using rule 63 (fator -> var .)
     SUBTRACAO       reduce using rule 63 (fator -> var .)
     ENTAO           reduce using rule 63 (fator -> var .)
+    $end            reduce using rule 63 (fator -> var .)
     ATE             reduce using rule 63 (fator -> var .)
-    SENAO           reduce using rule 63 (fator -> var .)
 
 
-state 34
-
-    (51) expressao_unaria -> operador_soma . fator
-    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
-    (63) fator -> . var
-    (64) fator -> . chamada_funcao
-    (65) fator -> . numero
-    (11) var -> . IDENTIFICADOR
-    (12) var -> . IDENTIFICADOR indice
-    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
-    (66) numero -> . INTEIRO
-    (67) numero -> . FLUTUANTE
-
-    ABRE_COLXETE    shift and go to state 36
-    IDENTIFICADOR   shift and go to state 32
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
-
-    numero                         shift and go to state 39
-    chamada_funcao                 shift and go to state 30
-    fator                          shift and go to state 61
-    var                            shift and go to state 60
-
-state 35
+state 28
 
     (44) expressao_simples -> expressao_aditiva .
     (47) expressao_aditiva -> expressao_aditiva . operador_multiplicacao expressao_unaria
@@ -981,19 +752,107 @@ state 35
     ABRE_COLXETE    reduce using rule 44 (expressao_simples -> expressao_aditiva .)
     SOMA            reduce using rule 44 (expressao_simples -> expressao_aditiva .)
     SUBTRACAO       reduce using rule 44 (expressao_simples -> expressao_aditiva .)
-    ENTAO           reduce using rule 44 (expressao_simples -> expressao_aditiva .)
-    FECHA_PARENTESES reduce using rule 44 (expressao_simples -> expressao_aditiva .)
-    VIRGULA         reduce using rule 44 (expressao_simples -> expressao_aditiva .)
     ATE             reduce using rule 44 (expressao_simples -> expressao_aditiva .)
     SENAO           reduce using rule 44 (expressao_simples -> expressao_aditiva .)
-    $end            reduce using rule 44 (expressao_simples -> expressao_aditiva .)
     FECHA_COLXETE   reduce using rule 44 (expressao_simples -> expressao_aditiva .)
-    MULTIPLICACAO   shift and go to state 56
-    DIVISAO         shift and go to state 58
+    FECHA_PARENTESES reduce using rule 44 (expressao_simples -> expressao_aditiva .)
+    VIRGULA         reduce using rule 44 (expressao_simples -> expressao_aditiva .)
+    ENTAO           reduce using rule 44 (expressao_simples -> expressao_aditiva .)
+    $end            reduce using rule 44 (expressao_simples -> expressao_aditiva .)
+    MULTIPLICACAO   shift and go to state 50
+    DIVISAO         shift and go to state 51
 
-    operador_multiplicacao         shift and go to state 62
+    operador_multiplicacao         shift and go to state 59
 
-state 36
+state 29
+
+    (67) numero -> FLUTUANTE .
+
+    MULTIPLICACAO   reduce using rule 67 (numero -> FLUTUANTE .)
+    DIVISAO         reduce using rule 67 (numero -> FLUTUANTE .)
+    MENOR           reduce using rule 67 (numero -> FLUTUANTE .)
+    MAIOR           reduce using rule 67 (numero -> FLUTUANTE .)
+    IGUAL           reduce using rule 67 (numero -> FLUTUANTE .)
+    MENOR_IGUAL     reduce using rule 67 (numero -> FLUTUANTE .)
+    MAIOR_IGUAL     reduce using rule 67 (numero -> FLUTUANTE .)
+    NEGACAO         reduce using rule 67 (numero -> FLUTUANTE .)
+    FIM             reduce using rule 67 (numero -> FLUTUANTE .)
+    error           reduce using rule 67 (numero -> FLUTUANTE .)
+    SE              reduce using rule 67 (numero -> FLUTUANTE .)
+    REPITA          reduce using rule 67 (numero -> FLUTUANTE .)
+    LEIA            reduce using rule 67 (numero -> FLUTUANTE .)
+    ESCREVA         reduce using rule 67 (numero -> FLUTUANTE .)
+    RETORNA         reduce using rule 67 (numero -> FLUTUANTE .)
+    INTEIRO         reduce using rule 67 (numero -> FLUTUANTE .)
+    FLUTUANTE       reduce using rule 67 (numero -> FLUTUANTE .)
+    IDENTIFICADOR   reduce using rule 67 (numero -> FLUTUANTE .)
+    ABRE_COLXETE    reduce using rule 67 (numero -> FLUTUANTE .)
+    SOMA            reduce using rule 67 (numero -> FLUTUANTE .)
+    SUBTRACAO       reduce using rule 67 (numero -> FLUTUANTE .)
+    ATE             reduce using rule 67 (numero -> FLUTUANTE .)
+    SENAO           reduce using rule 67 (numero -> FLUTUANTE .)
+    FECHA_COLXETE   reduce using rule 67 (numero -> FLUTUANTE .)
+    $end            reduce using rule 67 (numero -> FLUTUANTE .)
+    FECHA_PARENTESES reduce using rule 67 (numero -> FLUTUANTE .)
+    VIRGULA         reduce using rule 67 (numero -> FLUTUANTE .)
+    ENTAO           reduce using rule 67 (numero -> FLUTUANTE .)
+
+
+state 30
+
+    (59) operador_soma -> SUBTRACAO .
+
+    ABRE_COLXETE    reduce using rule 59 (operador_soma -> SUBTRACAO .)
+    IDENTIFICADOR   reduce using rule 59 (operador_soma -> SUBTRACAO .)
+    INTEIRO         reduce using rule 59 (operador_soma -> SUBTRACAO .)
+    FLUTUANTE       reduce using rule 59 (operador_soma -> SUBTRACAO .)
+
+
+state 31
+
+    (11) var -> IDENTIFICADOR .
+    (12) var -> IDENTIFICADOR . indice
+    (68) chamada_funcao -> IDENTIFICADOR . ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    (13) indice -> . indice ABRE_COLXETE expressao FECHA_COLXETE
+    (14) indice -> . ABRE_COLXETE expressao FECHA_COLXETE
+
+  ! shift/reduce conflict for ABRE_COLXETE resolved as shift
+    ATRIBUICAO      reduce using rule 11 (var -> IDENTIFICADOR .)
+    MULTIPLICACAO   reduce using rule 11 (var -> IDENTIFICADOR .)
+    DIVISAO         reduce using rule 11 (var -> IDENTIFICADOR .)
+    MENOR           reduce using rule 11 (var -> IDENTIFICADOR .)
+    MAIOR           reduce using rule 11 (var -> IDENTIFICADOR .)
+    IGUAL           reduce using rule 11 (var -> IDENTIFICADOR .)
+    MENOR_IGUAL     reduce using rule 11 (var -> IDENTIFICADOR .)
+    MAIOR_IGUAL     reduce using rule 11 (var -> IDENTIFICADOR .)
+    NEGACAO         reduce using rule 11 (var -> IDENTIFICADOR .)
+    ATE             reduce using rule 11 (var -> IDENTIFICADOR .)
+    error           reduce using rule 11 (var -> IDENTIFICADOR .)
+    SE              reduce using rule 11 (var -> IDENTIFICADOR .)
+    REPITA          reduce using rule 11 (var -> IDENTIFICADOR .)
+    LEIA            reduce using rule 11 (var -> IDENTIFICADOR .)
+    ESCREVA         reduce using rule 11 (var -> IDENTIFICADOR .)
+    RETORNA         reduce using rule 11 (var -> IDENTIFICADOR .)
+    INTEIRO         reduce using rule 11 (var -> IDENTIFICADOR .)
+    FLUTUANTE       reduce using rule 11 (var -> IDENTIFICADOR .)
+    IDENTIFICADOR   reduce using rule 11 (var -> IDENTIFICADOR .)
+    SOMA            reduce using rule 11 (var -> IDENTIFICADOR .)
+    SUBTRACAO       reduce using rule 11 (var -> IDENTIFICADOR .)
+    $end            reduce using rule 11 (var -> IDENTIFICADOR .)
+    FECHA_COLXETE   reduce using rule 11 (var -> IDENTIFICADOR .)
+    FECHA_PARENTESES reduce using rule 11 (var -> IDENTIFICADOR .)
+    VIRGULA         reduce using rule 11 (var -> IDENTIFICADOR .)
+    FIM             reduce using rule 11 (var -> IDENTIFICADOR .)
+    ENTAO           reduce using rule 11 (var -> IDENTIFICADOR .)
+    SENAO           reduce using rule 11 (var -> IDENTIFICADOR .)
+    ABRE_PARENTESES shift and go to state 60
+    ABRE_COLXETE    shift and go to state 17
+
+  ! ABRE_COLXETE    [ reduce using rule 11 (var -> IDENTIFICADOR .) ]
+
+    indice                         shift and go to state 18
+
+state 32
 
     (62) fator -> ABRE_COLXETE . expressao FECHA_COLXETE
     (42) expressao -> . expressao_simples
@@ -1019,26 +878,60 @@ state 36
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    expressao                      shift and go to state 63
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 61
 
-state 37
+state 33
+
+    (64) fator -> chamada_funcao .
+
+    MULTIPLICACAO   reduce using rule 64 (fator -> chamada_funcao .)
+    DIVISAO         reduce using rule 64 (fator -> chamada_funcao .)
+    MENOR           reduce using rule 64 (fator -> chamada_funcao .)
+    MAIOR           reduce using rule 64 (fator -> chamada_funcao .)
+    IGUAL           reduce using rule 64 (fator -> chamada_funcao .)
+    MENOR_IGUAL     reduce using rule 64 (fator -> chamada_funcao .)
+    MAIOR_IGUAL     reduce using rule 64 (fator -> chamada_funcao .)
+    NEGACAO         reduce using rule 64 (fator -> chamada_funcao .)
+    FECHA_PARENTESES reduce using rule 64 (fator -> chamada_funcao .)
+    VIRGULA         reduce using rule 64 (fator -> chamada_funcao .)
+    FECHA_COLXETE   reduce using rule 64 (fator -> chamada_funcao .)
+    INTEIRO         reduce using rule 64 (fator -> chamada_funcao .)
+    FLUTUANTE       reduce using rule 64 (fator -> chamada_funcao .)
+    IDENTIFICADOR   reduce using rule 64 (fator -> chamada_funcao .)
+    $end            reduce using rule 64 (fator -> chamada_funcao .)
+    FIM             reduce using rule 64 (fator -> chamada_funcao .)
+    error           reduce using rule 64 (fator -> chamada_funcao .)
+    SE              reduce using rule 64 (fator -> chamada_funcao .)
+    REPITA          reduce using rule 64 (fator -> chamada_funcao .)
+    LEIA            reduce using rule 64 (fator -> chamada_funcao .)
+    ESCREVA         reduce using rule 64 (fator -> chamada_funcao .)
+    RETORNA         reduce using rule 64 (fator -> chamada_funcao .)
+    ABRE_COLXETE    reduce using rule 64 (fator -> chamada_funcao .)
+    SOMA            reduce using rule 64 (fator -> chamada_funcao .)
+    SUBTRACAO       reduce using rule 64 (fator -> chamada_funcao .)
+    ENTAO           reduce using rule 64 (fator -> chamada_funcao .)
+    ATE             reduce using rule 64 (fator -> chamada_funcao .)
+    SENAO           reduce using rule 64 (fator -> chamada_funcao .)
+
+
+state 34
 
     (58) operador_soma -> SOMA .
 
@@ -1048,17 +941,7 @@ state 37
     FLUTUANTE       reduce using rule 58 (operador_soma -> SOMA .)
 
 
-state 38
-
-    (59) operador_soma -> SUBTRACAO .
-
-    ABRE_COLXETE    reduce using rule 59 (operador_soma -> SUBTRACAO .)
-    IDENTIFICADOR   reduce using rule 59 (operador_soma -> SUBTRACAO .)
-    INTEIRO         reduce using rule 59 (operador_soma -> SUBTRACAO .)
-    FLUTUANTE       reduce using rule 59 (operador_soma -> SUBTRACAO .)
-
-
-state 39
+state 35
 
     (65) fator -> numero .
 
@@ -1070,13 +953,13 @@ state 39
     MENOR_IGUAL     reduce using rule 65 (fator -> numero .)
     MAIOR_IGUAL     reduce using rule 65 (fator -> numero .)
     NEGACAO         reduce using rule 65 (fator -> numero .)
+    FECHA_PARENTESES reduce using rule 65 (fator -> numero .)
+    VIRGULA         reduce using rule 65 (fator -> numero .)
+    FECHA_COLXETE   reduce using rule 65 (fator -> numero .)
     INTEIRO         reduce using rule 65 (fator -> numero .)
     FLUTUANTE       reduce using rule 65 (fator -> numero .)
     IDENTIFICADOR   reduce using rule 65 (fator -> numero .)
     $end            reduce using rule 65 (fator -> numero .)
-    FECHA_COLXETE   reduce using rule 65 (fator -> numero .)
-    FECHA_PARENTESES reduce using rule 65 (fator -> numero .)
-    VIRGULA         reduce using rule 65 (fator -> numero .)
     FIM             reduce using rule 65 (fator -> numero .)
     error           reduce using rule 65 (fator -> numero .)
     SE              reduce using rule 65 (fator -> numero .)
@@ -1092,14 +975,30 @@ state 39
     SENAO           reduce using rule 65 (fator -> numero .)
 
 
-state 40
+state 36
 
-    (14) indice -> ABRE_COLXETE expressao . FECHA_COLXETE
+    (51) expressao_unaria -> operador_soma . fator
+    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
+    (63) fator -> . var
+    (64) fator -> . chamada_funcao
+    (65) fator -> . numero
+    (11) var -> . IDENTIFICADOR
+    (12) var -> . IDENTIFICADOR indice
+    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    (66) numero -> . INTEIRO
+    (67) numero -> . FLUTUANTE
 
-    FECHA_COLXETE   shift and go to state 64
+    ABRE_COLXETE    shift and go to state 32
+    IDENTIFICADOR   shift and go to state 31
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
+    fator                          shift and go to state 62
+    chamada_funcao                 shift and go to state 33
+    var                            shift and go to state 63
+    numero                         shift and go to state 35
 
-state 41
+state 37
 
     (50) expressao_unaria -> fator .
 
@@ -1111,8 +1010,6 @@ state 41
     MENOR_IGUAL     reduce using rule 50 (expressao_unaria -> fator .)
     MAIOR_IGUAL     reduce using rule 50 (expressao_unaria -> fator .)
     NEGACAO         reduce using rule 50 (expressao_unaria -> fator .)
-    FECHA_PARENTESES reduce using rule 50 (expressao_unaria -> fator .)
-    VIRGULA         reduce using rule 50 (expressao_unaria -> fator .)
     ATE             reduce using rule 50 (expressao_unaria -> fator .)
     error           reduce using rule 50 (expressao_unaria -> fator .)
     SE              reduce using rule 50 (expressao_unaria -> fator .)
@@ -1126,11 +1023,114 @@ state 41
     ABRE_COLXETE    reduce using rule 50 (expressao_unaria -> fator .)
     SOMA            reduce using rule 50 (expressao_unaria -> fator .)
     SUBTRACAO       reduce using rule 50 (expressao_unaria -> fator .)
-    FIM             reduce using rule 50 (expressao_unaria -> fator .)
     $end            reduce using rule 50 (expressao_unaria -> fator .)
     FECHA_COLXETE   reduce using rule 50 (expressao_unaria -> fator .)
+    FECHA_PARENTESES reduce using rule 50 (expressao_unaria -> fator .)
+    VIRGULA         reduce using rule 50 (expressao_unaria -> fator .)
+    FIM             reduce using rule 50 (expressao_unaria -> fator .)
     ENTAO           reduce using rule 50 (expressao_unaria -> fator .)
     SENAO           reduce using rule 50 (expressao_unaria -> fator .)
+
+
+state 38
+
+    (43) expressao -> atribuicao .
+
+    FECHA_COLXETE   reduce using rule 43 (expressao -> atribuicao .)
+    FIM             reduce using rule 43 (expressao -> atribuicao .)
+    error           reduce using rule 43 (expressao -> atribuicao .)
+    SE              reduce using rule 43 (expressao -> atribuicao .)
+    REPITA          reduce using rule 43 (expressao -> atribuicao .)
+    LEIA            reduce using rule 43 (expressao -> atribuicao .)
+    ESCREVA         reduce using rule 43 (expressao -> atribuicao .)
+    RETORNA         reduce using rule 43 (expressao -> atribuicao .)
+    INTEIRO         reduce using rule 43 (expressao -> atribuicao .)
+    FLUTUANTE       reduce using rule 43 (expressao -> atribuicao .)
+    IDENTIFICADOR   reduce using rule 43 (expressao -> atribuicao .)
+    ABRE_COLXETE    reduce using rule 43 (expressao -> atribuicao .)
+    SOMA            reduce using rule 43 (expressao -> atribuicao .)
+    SUBTRACAO       reduce using rule 43 (expressao -> atribuicao .)
+    $end            reduce using rule 43 (expressao -> atribuicao .)
+    FECHA_PARENTESES reduce using rule 43 (expressao -> atribuicao .)
+    VIRGULA         reduce using rule 43 (expressao -> atribuicao .)
+    ENTAO           reduce using rule 43 (expressao -> atribuicao .)
+    ATE             reduce using rule 43 (expressao -> atribuicao .)
+    SENAO           reduce using rule 43 (expressao -> atribuicao .)
+
+
+state 39
+
+    (66) numero -> INTEIRO .
+
+    MULTIPLICACAO   reduce using rule 66 (numero -> INTEIRO .)
+    DIVISAO         reduce using rule 66 (numero -> INTEIRO .)
+    MENOR           reduce using rule 66 (numero -> INTEIRO .)
+    MAIOR           reduce using rule 66 (numero -> INTEIRO .)
+    IGUAL           reduce using rule 66 (numero -> INTEIRO .)
+    MENOR_IGUAL     reduce using rule 66 (numero -> INTEIRO .)
+    MAIOR_IGUAL     reduce using rule 66 (numero -> INTEIRO .)
+    NEGACAO         reduce using rule 66 (numero -> INTEIRO .)
+    FIM             reduce using rule 66 (numero -> INTEIRO .)
+    error           reduce using rule 66 (numero -> INTEIRO .)
+    SE              reduce using rule 66 (numero -> INTEIRO .)
+    REPITA          reduce using rule 66 (numero -> INTEIRO .)
+    LEIA            reduce using rule 66 (numero -> INTEIRO .)
+    ESCREVA         reduce using rule 66 (numero -> INTEIRO .)
+    RETORNA         reduce using rule 66 (numero -> INTEIRO .)
+    INTEIRO         reduce using rule 66 (numero -> INTEIRO .)
+    FLUTUANTE       reduce using rule 66 (numero -> INTEIRO .)
+    IDENTIFICADOR   reduce using rule 66 (numero -> INTEIRO .)
+    ABRE_COLXETE    reduce using rule 66 (numero -> INTEIRO .)
+    SOMA            reduce using rule 66 (numero -> INTEIRO .)
+    SUBTRACAO       reduce using rule 66 (numero -> INTEIRO .)
+    ATE             reduce using rule 66 (numero -> INTEIRO .)
+    SENAO           reduce using rule 66 (numero -> INTEIRO .)
+    FECHA_COLXETE   reduce using rule 66 (numero -> INTEIRO .)
+    $end            reduce using rule 66 (numero -> INTEIRO .)
+    FECHA_PARENTESES reduce using rule 66 (numero -> INTEIRO .)
+    VIRGULA         reduce using rule 66 (numero -> INTEIRO .)
+    ENTAO           reduce using rule 66 (numero -> INTEIRO .)
+
+
+state 40
+
+    (48) expressao_multiplicativa -> expressao_unaria .
+
+    MULTIPLICACAO   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    DIVISAO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    MENOR           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    MAIOR           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    IGUAL           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    MENOR_IGUAL     reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    MAIOR_IGUAL     reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    NEGACAO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    FECHA_COLXETE   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    FIM             reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    SENAO           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    error           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    SE              reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    REPITA          reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    LEIA            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    ESCREVA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    RETORNA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    INTEIRO         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    FLUTUANTE       reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    IDENTIFICADOR   reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    ABRE_COLXETE    reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    SOMA            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    SUBTRACAO       reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    FECHA_PARENTESES reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    VIRGULA         reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    ENTAO           reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    $end            reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+    ATE             reduce using rule 48 (expressao_multiplicativa -> expressao_unaria .)
+
+
+state 41
+
+    (14) indice -> ABRE_COLXETE expressao . FECHA_COLXETE
+
+    FECHA_COLXETE   shift and go to state 64
 
 
 state 42
@@ -1159,26 +1159,36 @@ state 42
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 65
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
 
 state 43
+
+    (21) lista_parametros -> parametro .
+    (24) parametro -> parametro . ABRE_COLXETE FECHA_COLXETE
+
+    FECHA_PARENTESES reduce using rule 21 (lista_parametros -> parametro .)
+    VIRGULA         reduce using rule 21 (lista_parametros -> parametro .)
+    ABRE_COLXETE    shift and go to state 66
+
+
+state 44
 
     (22) lista_parametros -> vazio .
 
@@ -1186,30 +1196,20 @@ state 43
     VIRGULA         reduce using rule 22 (lista_parametros -> vazio .)
 
 
-state 44
+state 45
 
     (23) parametro -> tipo . DOIS_PONTOS IDENTIFICADOR
 
-    DOIS_PONTOS     shift and go to state 66
-
-
-state 45
-
-    (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros . FECHA_PARENTESES corpo FIM
-    (20) lista_parametros -> lista_parametros . VIRGULA lista_parametros
-
-    FECHA_PARENTESES shift and go to state 68
-    VIRGULA         shift and go to state 67
+    DOIS_PONTOS     shift and go to state 67
 
 
 state 46
 
-    (21) lista_parametros -> parametro .
-    (24) parametro -> parametro . ABRE_COLXETE FECHA_COLXETE
+    (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros . FECHA_PARENTESES corpo FIM
+    (20) lista_parametros -> lista_parametros . VIRGULA lista_parametros
 
-    FECHA_PARENTESES reduce using rule 21 (lista_parametros -> parametro .)
-    VIRGULA         reduce using rule 21 (lista_parametros -> parametro .)
-    ABRE_COLXETE    shift and go to state 69
+    FECHA_PARENTESES shift and go to state 69
+    VIRGULA         shift and go to state 68
 
 
 state 47
@@ -1220,9 +1220,6 @@ state 47
     FLUTUANTE       reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     IDENTIFICADOR   reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     $end            reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
-    FECHA_COLXETE   reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
-    FECHA_PARENTESES reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
-    VIRGULA         reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     FIM             reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     error           reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     SE              reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
@@ -1233,7 +1230,10 @@ state 47
     ABRE_COLXETE    reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     SOMA            reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     SUBTRACAO       reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
+    FECHA_COLXETE   reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
+    FECHA_PARENTESES reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     ENTAO           reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
+    VIRGULA         reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     ATE             reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
     SENAO           reduce using rule 38 (atribuicao -> var ATRIBUICAO expressao .)
 
@@ -1246,45 +1246,64 @@ state 48
     (11) var -> . IDENTIFICADOR
     (12) var -> . IDENTIFICADOR indice
 
-    IDENTIFICADOR   shift and go to state 23
+    IDENTIFICADOR   shift and go to state 22
 
-    var                            shift and go to state 24
     lista_variaveis                shift and go to state 70
+    var                            shift and go to state 23
 
 state 49
 
-    (56) operador_relacional -> MAIOR_IGUAL .
+    (49) expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao . expressao_unaria
+    (50) expressao_unaria -> . fator
+    (51) expressao_unaria -> . operador_soma fator
+    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
+    (63) fator -> . var
+    (64) fator -> . chamada_funcao
+    (65) fator -> . numero
+    (58) operador_soma -> . SOMA
+    (59) operador_soma -> . SUBTRACAO
+    (11) var -> . IDENTIFICADOR
+    (12) var -> . IDENTIFICADOR indice
+    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    (66) numero -> . INTEIRO
+    (67) numero -> . FLUTUANTE
 
-    ABRE_COLXETE    reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
-    SOMA            reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
-    SUBTRACAO       reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
-    IDENTIFICADOR   reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
-    INTEIRO         reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
-    FLUTUANTE       reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    IDENTIFICADOR   shift and go to state 31
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
+    fator                          shift and go to state 37
+    chamada_funcao                 shift and go to state 33
+    var                            shift and go to state 63
+    numero                         shift and go to state 35
+    operador_soma                  shift and go to state 36
+    expressao_unaria               shift and go to state 71
 
 state 50
 
-    (52) operador_relacional -> MENOR .
+    (60) operador_multiplicacao -> MULTIPLICACAO .
 
-    ABRE_COLXETE    reduce using rule 52 (operador_relacional -> MENOR .)
-    SOMA            reduce using rule 52 (operador_relacional -> MENOR .)
-    SUBTRACAO       reduce using rule 52 (operador_relacional -> MENOR .)
-    IDENTIFICADOR   reduce using rule 52 (operador_relacional -> MENOR .)
-    INTEIRO         reduce using rule 52 (operador_relacional -> MENOR .)
-    FLUTUANTE       reduce using rule 52 (operador_relacional -> MENOR .)
+    ABRE_COLXETE    reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    SOMA            reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    SUBTRACAO       reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    IDENTIFICADOR   reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    INTEIRO         reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    FLUTUANTE       reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
 
 
 state 51
 
-    (54) operador_relacional -> IGUAL .
+    (61) operador_multiplicacao -> DIVISAO .
 
-    ABRE_COLXETE    reduce using rule 54 (operador_relacional -> IGUAL .)
-    SOMA            reduce using rule 54 (operador_relacional -> IGUAL .)
-    SUBTRACAO       reduce using rule 54 (operador_relacional -> IGUAL .)
-    IDENTIFICADOR   reduce using rule 54 (operador_relacional -> IGUAL .)
-    INTEIRO         reduce using rule 54 (operador_relacional -> IGUAL .)
-    FLUTUANTE       reduce using rule 54 (operador_relacional -> IGUAL .)
+    ABRE_COLXETE    reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
+    SOMA            reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
+    SUBTRACAO       reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
+    IDENTIFICADOR   reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
+    INTEIRO         reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
+    FLUTUANTE       reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
 
 
 state 52
@@ -1308,23 +1327,59 @@ state 52
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    IDENTIFICADOR   shift and go to state 32
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    IDENTIFICADOR   shift and go to state 31
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 71
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    expressao_multiplicativa       shift and go to state 29
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 60
-    operador_soma                  shift and go to state 34
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    operador_soma                  shift and go to state 36
+    expressao_aditiva              shift and go to state 72
+    fator                          shift and go to state 37
+    var                            shift and go to state 63
+    expressao_unaria               shift and go to state 40
 
 state 53
+
+    (52) operador_relacional -> MENOR .
+
+    ABRE_COLXETE    reduce using rule 52 (operador_relacional -> MENOR .)
+    SOMA            reduce using rule 52 (operador_relacional -> MENOR .)
+    SUBTRACAO       reduce using rule 52 (operador_relacional -> MENOR .)
+    IDENTIFICADOR   reduce using rule 52 (operador_relacional -> MENOR .)
+    INTEIRO         reduce using rule 52 (operador_relacional -> MENOR .)
+    FLUTUANTE       reduce using rule 52 (operador_relacional -> MENOR .)
+
+
+state 54
+
+    (54) operador_relacional -> IGUAL .
+
+    ABRE_COLXETE    reduce using rule 54 (operador_relacional -> IGUAL .)
+    SOMA            reduce using rule 54 (operador_relacional -> IGUAL .)
+    SUBTRACAO       reduce using rule 54 (operador_relacional -> IGUAL .)
+    IDENTIFICADOR   reduce using rule 54 (operador_relacional -> IGUAL .)
+    INTEIRO         reduce using rule 54 (operador_relacional -> IGUAL .)
+    FLUTUANTE       reduce using rule 54 (operador_relacional -> IGUAL .)
+
+
+state 55
+
+    (56) operador_relacional -> MAIOR_IGUAL .
+
+    ABRE_COLXETE    reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    SOMA            reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    SUBTRACAO       reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    IDENTIFICADOR   reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    INTEIRO         reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+    FLUTUANTE       reduce using rule 56 (operador_relacional -> MAIOR_IGUAL .)
+
+
+state 56
 
     (57) operador_relacional -> NEGACAO .
 
@@ -1336,19 +1391,7 @@ state 53
     FLUTUANTE       reduce using rule 57 (operador_relacional -> NEGACAO .)
 
 
-state 54
-
-    (53) operador_relacional -> MAIOR .
-
-    ABRE_COLXETE    reduce using rule 53 (operador_relacional -> MAIOR .)
-    SOMA            reduce using rule 53 (operador_relacional -> MAIOR .)
-    SUBTRACAO       reduce using rule 53 (operador_relacional -> MAIOR .)
-    IDENTIFICADOR   reduce using rule 53 (operador_relacional -> MAIOR .)
-    INTEIRO         reduce using rule 53 (operador_relacional -> MAIOR .)
-    FLUTUANTE       reduce using rule 53 (operador_relacional -> MAIOR .)
-
-
-state 55
+state 57
 
     (55) operador_relacional -> MENOR_IGUAL .
 
@@ -1360,21 +1403,21 @@ state 55
     FLUTUANTE       reduce using rule 55 (operador_relacional -> MENOR_IGUAL .)
 
 
-state 56
+state 58
 
-    (60) operador_multiplicacao -> MULTIPLICACAO .
+    (53) operador_relacional -> MAIOR .
 
-    ABRE_COLXETE    reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
-    SOMA            reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
-    SUBTRACAO       reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
-    IDENTIFICADOR   reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
-    INTEIRO         reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
-    FLUTUANTE       reduce using rule 60 (operador_multiplicacao -> MULTIPLICACAO .)
+    ABRE_COLXETE    reduce using rule 53 (operador_relacional -> MAIOR .)
+    SOMA            reduce using rule 53 (operador_relacional -> MAIOR .)
+    SUBTRACAO       reduce using rule 53 (operador_relacional -> MAIOR .)
+    IDENTIFICADOR   reduce using rule 53 (operador_relacional -> MAIOR .)
+    INTEIRO         reduce using rule 53 (operador_relacional -> MAIOR .)
+    FLUTUANTE       reduce using rule 53 (operador_relacional -> MAIOR .)
 
 
-state 57
+state 59
 
-    (49) expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao . expressao_unaria
+    (47) expressao_aditiva -> expressao_aditiva operador_multiplicacao . expressao_unaria
     (50) expressao_unaria -> . fator
     (51) expressao_unaria -> . operador_soma fator
     (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
@@ -1389,33 +1432,21 @@ state 57
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    IDENTIFICADOR   shift and go to state 32
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    IDENTIFICADOR   shift and go to state 31
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    numero                         shift and go to state 39
-    var                            shift and go to state 60
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 72
-    fator                          shift and go to state 41
-    operador_soma                  shift and go to state 34
+    fator                          shift and go to state 37
+    chamada_funcao                 shift and go to state 33
+    var                            shift and go to state 63
+    numero                         shift and go to state 35
+    operador_soma                  shift and go to state 36
+    expressao_unaria               shift and go to state 73
 
-state 58
-
-    (61) operador_multiplicacao -> DIVISAO .
-
-    ABRE_COLXETE    reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-    SOMA            reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-    SUBTRACAO       reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-    IDENTIFICADOR   reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-    INTEIRO         reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-    FLUTUANTE       reduce using rule 61 (operador_multiplicacao -> DIVISAO .)
-
-
-state 59
+state 60
 
     (68) chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES . lista_argumentos FECHA_PARENTESES
     (69) lista_argumentos -> . lista_argumentos VIRGULA expressao
@@ -1447,28 +1478,69 @@ state 59
 
     FECHA_PARENTESES reduce using rule 72 (vazio -> .)
     VIRGULA         reduce using rule 72 (vazio -> .)
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    expressao                      shift and go to state 75
-    vazio                          shift and go to state 73
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    lista_argumentos               shift and go to state 74
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    fator                          shift and go to state 37
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    var                            shift and go to state 27
+    expressao_aditiva              shift and go to state 28
+    lista_argumentos               shift and go to state 75
+    vazio                          shift and go to state 74
+    atribuicao                     shift and go to state 38
+    numero                         shift and go to state 35
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 76
 
-state 60
+state 61
+
+    (62) fator -> ABRE_COLXETE expressao . FECHA_COLXETE
+
+    FECHA_COLXETE   shift and go to state 77
+
+
+state 62
+
+    (51) expressao_unaria -> operador_soma fator .
+
+    MULTIPLICACAO   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    DIVISAO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    MENOR           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    MAIOR           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    IGUAL           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    MENOR_IGUAL     reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    MAIOR_IGUAL     reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    NEGACAO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    ATE             reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    error           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    SE              reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    REPITA          reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    LEIA            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    ESCREVA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    RETORNA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    INTEIRO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    FLUTUANTE       reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    IDENTIFICADOR   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    ABRE_COLXETE    reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    SOMA            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    SUBTRACAO       reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    $end            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    FECHA_COLXETE   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    FECHA_PARENTESES reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    VIRGULA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    FIM             reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    ENTAO           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+    SENAO           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
+
+
+state 63
 
     (63) fator -> var .
 
@@ -1502,84 +1574,11 @@ state 60
     SENAO           reduce using rule 63 (fator -> var .)
 
 
-state 61
-
-    (51) expressao_unaria -> operador_soma fator .
-
-    MULTIPLICACAO   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    DIVISAO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    MENOR           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    MAIOR           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    IGUAL           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    MENOR_IGUAL     reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    MAIOR_IGUAL     reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    NEGACAO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    FECHA_PARENTESES reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    VIRGULA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    ATE             reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    error           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    SE              reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    REPITA          reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    LEIA            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    ESCREVA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    RETORNA         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    INTEIRO         reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    FLUTUANTE       reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    IDENTIFICADOR   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    ABRE_COLXETE    reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    SOMA            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    SUBTRACAO       reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    FIM             reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    $end            reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    FECHA_COLXETE   reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    ENTAO           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-    SENAO           reduce using rule 51 (expressao_unaria -> operador_soma fator .)
-
-
-state 62
-
-    (47) expressao_aditiva -> expressao_aditiva operador_multiplicacao . expressao_unaria
-    (50) expressao_unaria -> . fator
-    (51) expressao_unaria -> . operador_soma fator
-    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
-    (63) fator -> . var
-    (64) fator -> . chamada_funcao
-    (65) fator -> . numero
-    (58) operador_soma -> . SOMA
-    (59) operador_soma -> . SUBTRACAO
-    (11) var -> . IDENTIFICADOR
-    (12) var -> . IDENTIFICADOR indice
-    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
-    (66) numero -> . INTEIRO
-    (67) numero -> . FLUTUANTE
-
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    IDENTIFICADOR   shift and go to state 32
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
-
-    numero                         shift and go to state 39
-    var                            shift and go to state 60
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 76
-    fator                          shift and go to state 41
-    operador_soma                  shift and go to state 34
-
-state 63
-
-    (62) fator -> ABRE_COLXETE expressao . FECHA_COLXETE
-
-    FECHA_COLXETE   shift and go to state 77
-
-
 state 64
 
     (14) indice -> ABRE_COLXETE expressao FECHA_COLXETE .
 
     ABRE_COLXETE    reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
-    ATRIBUICAO      reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     VIRGULA         reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     INTEIRO         reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     FLUTUANTE       reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
@@ -1596,6 +1595,7 @@ state 64
     SUBTRACAO       reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     ATE             reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     SENAO           reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
+    ATRIBUICAO      reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     MULTIPLICACAO   reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     DIVISAO         reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
     MENOR           reduce using rule 14 (indice -> ABRE_COLXETE expressao FECHA_COLXETE .)
@@ -1618,12 +1618,19 @@ state 65
 
 state 66
 
-    (23) parametro -> tipo DOIS_PONTOS . IDENTIFICADOR
+    (24) parametro -> parametro ABRE_COLXETE . FECHA_COLXETE
 
-    IDENTIFICADOR   shift and go to state 79
+    FECHA_COLXETE   shift and go to state 79
 
 
 state 67
+
+    (23) parametro -> tipo DOIS_PONTOS . IDENTIFICADOR
+
+    IDENTIFICADOR   shift and go to state 80
+
+
+state 68
 
     (20) lista_parametros -> lista_parametros VIRGULA . lista_parametros
     (20) lista_parametros -> . lista_parametros VIRGULA lista_parametros
@@ -1637,15 +1644,15 @@ state 67
 
     VIRGULA         reduce using rule 72 (vazio -> .)
     FECHA_PARENTESES reduce using rule 72 (vazio -> .)
-    INTEIRO         shift and go to state 5
-    FLUTUANTE       shift and go to state 1
+    INTEIRO         shift and go to state 13
+    FLUTUANTE       shift and go to state 5
 
-    tipo                           shift and go to state 44
-    lista_parametros               shift and go to state 80
-    vazio                          shift and go to state 43
-    parametro                      shift and go to state 46
+    vazio                          shift and go to state 44
+    lista_parametros               shift and go to state 81
+    parametro                      shift and go to state 43
+    tipo                           shift and go to state 45
 
-state 68
+state 69
 
     (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES . corpo FIM
     (25) corpo -> . corpo acao
@@ -1666,15 +1673,8 @@ state 68
     SOMA            reduce using rule 72 (vazio -> .)
     SUBTRACAO       reduce using rule 72 (vazio -> .)
 
-    corpo                          shift and go to state 81
     vazio                          shift and go to state 82
-
-state 69
-
-    (24) parametro -> parametro ABRE_COLXETE . FECHA_COLXETE
-
-    FECHA_COLXETE   shift and go to state 83
-
+    corpo                          shift and go to state 83
 
 state 70
 
@@ -1700,6 +1700,40 @@ state 70
 
 state 71
 
+    (49) expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .
+
+    MULTIPLICACAO   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    DIVISAO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    MENOR           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    MAIOR           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    IGUAL           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    MENOR_IGUAL     reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    MAIOR_IGUAL     reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    NEGACAO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    FECHA_COLXETE   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    FIM             reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    SENAO           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    error           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    SE              reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    REPITA          reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    LEIA            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    ESCREVA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    RETORNA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    INTEIRO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    FLUTUANTE       reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    IDENTIFICADOR   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    ABRE_COLXETE    reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    SOMA            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    SUBTRACAO       reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    FECHA_PARENTESES reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    VIRGULA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    ENTAO           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    $end            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+    ATE             reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
+
+
+state 72
+
     (45) expressao_simples -> expressao_simples operador_relacional expressao_aditiva .
     (47) expressao_aditiva -> expressao_aditiva . operador_multiplicacao expressao_unaria
     (60) operador_multiplicacao -> . MULTIPLICACAO
@@ -1724,78 +1758,19 @@ state 71
     ABRE_COLXETE    reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
     SOMA            reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
     SUBTRACAO       reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
-    ENTAO           reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
-    FECHA_PARENTESES reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
-    VIRGULA         reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
     ATE             reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
     SENAO           reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
-    $end            reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
     FECHA_COLXETE   reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
-    MULTIPLICACAO   shift and go to state 56
-    DIVISAO         shift and go to state 58
+    FECHA_PARENTESES reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
+    VIRGULA         reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
+    ENTAO           reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
+    $end            reduce using rule 45 (expressao_simples -> expressao_simples operador_relacional expressao_aditiva .)
+    MULTIPLICACAO   shift and go to state 50
+    DIVISAO         shift and go to state 51
 
-    operador_multiplicacao         shift and go to state 62
-
-state 72
-
-    (49) expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .
-
-    MULTIPLICACAO   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    DIVISAO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    MENOR           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    MAIOR           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    IGUAL           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    MENOR_IGUAL     reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    MAIOR_IGUAL     reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    NEGACAO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    ENTAO           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    FIM             reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    SENAO           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    error           reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    SE              reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    REPITA          reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    LEIA            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    ESCREVA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    RETORNA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    INTEIRO         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    FLUTUANTE       reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    IDENTIFICADOR   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    ABRE_COLXETE    reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    SOMA            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    SUBTRACAO       reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    $end            reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    FECHA_COLXETE   reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    FECHA_PARENTESES reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    VIRGULA         reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-    ATE             reduce using rule 49 (expressao_multiplicativa -> expressao_multiplicativa operador_multiplicacao expressao_unaria .)
-
+    operador_multiplicacao         shift and go to state 59
 
 state 73
-
-    (71) lista_argumentos -> vazio .
-
-    FECHA_PARENTESES reduce using rule 71 (lista_argumentos -> vazio .)
-    VIRGULA         reduce using rule 71 (lista_argumentos -> vazio .)
-
-
-state 74
-
-    (68) chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos . FECHA_PARENTESES
-    (69) lista_argumentos -> lista_argumentos . VIRGULA expressao
-
-    FECHA_PARENTESES shift and go to state 85
-    VIRGULA         shift and go to state 84
-
-
-state 75
-
-    (70) lista_argumentos -> expressao .
-
-    FECHA_PARENTESES reduce using rule 70 (lista_argumentos -> expressao .)
-    VIRGULA         reduce using rule 70 (lista_argumentos -> expressao .)
-
-
-state 76
 
     (47) expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .
 
@@ -1807,11 +1782,11 @@ state 76
     MENOR_IGUAL     reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     MAIOR_IGUAL     reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     NEGACAO         reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
+    FECHA_COLXETE   reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     INTEIRO         reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     FLUTUANTE       reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     IDENTIFICADOR   reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     $end            reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
-    FECHA_COLXETE   reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     FECHA_PARENTESES reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     VIRGULA         reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
     FIM             reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
@@ -1829,6 +1804,31 @@ state 76
     SENAO           reduce using rule 47 (expressao_aditiva -> expressao_aditiva operador_multiplicacao expressao_unaria .)
 
 
+state 74
+
+    (71) lista_argumentos -> vazio .
+
+    FECHA_PARENTESES reduce using rule 71 (lista_argumentos -> vazio .)
+    VIRGULA         reduce using rule 71 (lista_argumentos -> vazio .)
+
+
+state 75
+
+    (68) chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos . FECHA_PARENTESES
+    (69) lista_argumentos -> lista_argumentos . VIRGULA expressao
+
+    FECHA_PARENTESES shift and go to state 85
+    VIRGULA         shift and go to state 84
+
+
+state 76
+
+    (70) lista_argumentos -> expressao .
+
+    FECHA_PARENTESES reduce using rule 70 (lista_argumentos -> expressao .)
+    VIRGULA         reduce using rule 70 (lista_argumentos -> expressao .)
+
+
 state 77
 
     (62) fator -> ABRE_COLXETE expressao FECHA_COLXETE .
@@ -1841,13 +1841,13 @@ state 77
     MENOR_IGUAL     reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     MAIOR_IGUAL     reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     NEGACAO         reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
+    FECHA_PARENTESES reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
+    VIRGULA         reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
+    FECHA_COLXETE   reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     INTEIRO         reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     FLUTUANTE       reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     IDENTIFICADOR   reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     $end            reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
-    FECHA_COLXETE   reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
-    FECHA_PARENTESES reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
-    VIRGULA         reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     FIM             reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     error           reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
     SE              reduce using rule 62 (fator -> ABRE_COLXETE expressao FECHA_COLXETE .)
@@ -1868,7 +1868,6 @@ state 78
     (13) indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .
 
     ABRE_COLXETE    reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
-    ATRIBUICAO      reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     VIRGULA         reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     INTEIRO         reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     FLUTUANTE       reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
@@ -1885,6 +1884,7 @@ state 78
     SUBTRACAO       reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     ATE             reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     SENAO           reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
+    ATRIBUICAO      reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     MULTIPLICACAO   reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     DIVISAO         reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
     MENOR           reduce using rule 13 (indice -> indice ABRE_COLXETE expressao FECHA_COLXETE .)
@@ -1900,6 +1900,15 @@ state 78
 
 state 79
 
+    (24) parametro -> parametro ABRE_COLXETE FECHA_COLXETE .
+
+    ABRE_COLXETE    reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
+    FECHA_PARENTESES reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
+    VIRGULA         reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
+
+
+state 80
+
     (23) parametro -> tipo DOIS_PONTOS IDENTIFICADOR .
 
     ABRE_COLXETE    reduce using rule 23 (parametro -> tipo DOIS_PONTOS IDENTIFICADOR .)
@@ -1907,19 +1916,40 @@ state 79
     VIRGULA         reduce using rule 23 (parametro -> tipo DOIS_PONTOS IDENTIFICADOR .)
 
 
-state 80
+state 81
 
     (20) lista_parametros -> lista_parametros VIRGULA lista_parametros .
     (20) lista_parametros -> lista_parametros . VIRGULA lista_parametros
 
   ! shift/reduce conflict for VIRGULA resolved as shift
     FECHA_PARENTESES reduce using rule 20 (lista_parametros -> lista_parametros VIRGULA lista_parametros .)
-    VIRGULA         shift and go to state 67
+    VIRGULA         shift and go to state 68
 
   ! VIRGULA         [ reduce using rule 20 (lista_parametros -> lista_parametros VIRGULA lista_parametros .) ]
 
 
-state 81
+state 82
+
+    (26) corpo -> vazio .
+
+    FIM             reduce using rule 26 (corpo -> vazio .)
+    error           reduce using rule 26 (corpo -> vazio .)
+    SE              reduce using rule 26 (corpo -> vazio .)
+    REPITA          reduce using rule 26 (corpo -> vazio .)
+    LEIA            reduce using rule 26 (corpo -> vazio .)
+    ESCREVA         reduce using rule 26 (corpo -> vazio .)
+    RETORNA         reduce using rule 26 (corpo -> vazio .)
+    INTEIRO         reduce using rule 26 (corpo -> vazio .)
+    FLUTUANTE       reduce using rule 26 (corpo -> vazio .)
+    IDENTIFICADOR   reduce using rule 26 (corpo -> vazio .)
+    ABRE_COLXETE    reduce using rule 26 (corpo -> vazio .)
+    SOMA            reduce using rule 26 (corpo -> vazio .)
+    SUBTRACAO       reduce using rule 26 (corpo -> vazio .)
+    ATE             reduce using rule 26 (corpo -> vazio .)
+    SENAO           reduce using rule 26 (corpo -> vazio .)
+
+
+state 83
 
     (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo . FIM
     (25) corpo -> corpo . acao
@@ -1963,69 +1993,39 @@ state 81
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    FIM             shift and go to state 102
-    error           shift and go to state 89
-    SE              shift and go to state 86
-    REPITA          shift and go to state 87
-    LEIA            shift and go to state 94
-    ESCREVA         shift and go to state 97
-    RETORNA         shift and go to state 90
-    INTEIRO         shift and go to state 88
-    FLUTUANTE       shift and go to state 95
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
+    FIM             shift and go to state 87
+    error           shift and go to state 86
+    SE              shift and go to state 100
+    REPITA          shift and go to state 98
+    LEIA            shift and go to state 91
+    ESCREVA         shift and go to state 89
+    RETORNA         shift and go to state 99
+    INTEIRO         shift and go to state 94
+    FLUTUANTE       shift and go to state 97
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
 
-    escreva                        shift and go to state 96
-    fator                          shift and go to state 41
-    retorna                        shift and go to state 91
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    leia                           shift and go to state 99
-    numero                         shift and go to state 39
-    tipo                           shift and go to state 100
-    expressao_multiplicativa       shift and go to state 29
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 31
-    operador_soma                  shift and go to state 34
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    declaracao_variaveis           shift and go to state 101
-    se                             shift and go to state 98
-    acao                           shift and go to state 92
-    repita                         shift and go to state 93
+    expressao_multiplicativa       shift and go to state 25
+    se                             shift and go to state 102
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    declaracao_variaveis           shift and go to state 93
+    escreva                        shift and go to state 95
+    leia                           shift and go to state 90
+    retorna                        shift and go to state 96
+    chamada_funcao                 shift and go to state 33
+    fator                          shift and go to state 37
+    numero                         shift and go to state 35
+    operador_soma                  shift and go to state 36
+    acao                           shift and go to state 88
+    expressao_simples              shift and go to state 26
+    tipo                           shift and go to state 101
+    var                            shift and go to state 27
+    repita                         shift and go to state 92
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 103
-
-state 82
-
-    (26) corpo -> vazio .
-
-    FIM             reduce using rule 26 (corpo -> vazio .)
-    SENAO           reduce using rule 26 (corpo -> vazio .)
-    error           reduce using rule 26 (corpo -> vazio .)
-    SE              reduce using rule 26 (corpo -> vazio .)
-    REPITA          reduce using rule 26 (corpo -> vazio .)
-    LEIA            reduce using rule 26 (corpo -> vazio .)
-    ESCREVA         reduce using rule 26 (corpo -> vazio .)
-    RETORNA         reduce using rule 26 (corpo -> vazio .)
-    INTEIRO         reduce using rule 26 (corpo -> vazio .)
-    FLUTUANTE       reduce using rule 26 (corpo -> vazio .)
-    IDENTIFICADOR   reduce using rule 26 (corpo -> vazio .)
-    ABRE_COLXETE    reduce using rule 26 (corpo -> vazio .)
-    SOMA            reduce using rule 26 (corpo -> vazio .)
-    SUBTRACAO       reduce using rule 26 (corpo -> vazio .)
-    ATE             reduce using rule 26 (corpo -> vazio .)
-
-
-state 83
-
-    (24) parametro -> parametro ABRE_COLXETE FECHA_COLXETE .
-
-    ABRE_COLXETE    reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
-    FECHA_PARENTESES reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
-    VIRGULA         reduce using rule 24 (parametro -> parametro ABRE_COLXETE FECHA_COLXETE .)
-
 
 state 84
 
@@ -2053,24 +2053,24 @@ state 84
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 104
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
 
 state 85
 
@@ -2084,99 +2084,158 @@ state 85
     MENOR_IGUAL     reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     MAIOR_IGUAL     reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     NEGACAO         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    FECHA_COLXETE   reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    INTEIRO         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    FLUTUANTE       reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    IDENTIFICADOR   reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    $end            reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     FECHA_PARENTESES reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     VIRGULA         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    ATE             reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    FIM             reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     error           reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     SE              reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     REPITA          reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     LEIA            reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     ESCREVA         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     RETORNA         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    INTEIRO         reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    FLUTUANTE       reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    IDENTIFICADOR   reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     ABRE_COLXETE    reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     SOMA            reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     SUBTRACAO       reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    FIM             reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    FECHA_COLXETE   reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
-    $end            reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     ENTAO           reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
+    ATE             reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
     SENAO           reduce using rule 68 (chamada_funcao -> IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES .)
 
 
 state 86
 
-    (35) se -> SE . expressao ENTAO corpo FIM
-    (36) se -> SE . expressao ENTAO corpo SENAO corpo FIM
-    (42) expressao -> . expressao_simples
-    (43) expressao -> . atribuicao
-    (44) expressao_simples -> . expressao_aditiva
-    (45) expressao_simples -> . expressao_simples operador_relacional expressao_aditiva
-    (38) atribuicao -> . var ATRIBUICAO expressao
-    (46) expressao_aditiva -> . expressao_multiplicativa
-    (47) expressao_aditiva -> . expressao_aditiva operador_multiplicacao expressao_unaria
-    (11) var -> . IDENTIFICADOR
-    (12) var -> . IDENTIFICADOR indice
-    (48) expressao_multiplicativa -> . expressao_unaria
-    (49) expressao_multiplicativa -> . expressao_multiplicativa operador_multiplicacao expressao_unaria
-    (50) expressao_unaria -> . fator
-    (51) expressao_unaria -> . operador_soma fator
-    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
-    (63) fator -> . var
-    (64) fator -> . chamada_funcao
-    (65) fator -> . numero
-    (58) operador_soma -> . SOMA
-    (59) operador_soma -> . SUBTRACAO
-    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
-    (66) numero -> . INTEIRO
-    (67) numero -> . FLUTUANTE
+    (34) acao -> error .
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    ATE             reduce using rule 34 (acao -> error .)
+    error           reduce using rule 34 (acao -> error .)
+    SE              reduce using rule 34 (acao -> error .)
+    REPITA          reduce using rule 34 (acao -> error .)
+    LEIA            reduce using rule 34 (acao -> error .)
+    ESCREVA         reduce using rule 34 (acao -> error .)
+    RETORNA         reduce using rule 34 (acao -> error .)
+    INTEIRO         reduce using rule 34 (acao -> error .)
+    FLUTUANTE       reduce using rule 34 (acao -> error .)
+    IDENTIFICADOR   reduce using rule 34 (acao -> error .)
+    ABRE_COLXETE    reduce using rule 34 (acao -> error .)
+    SOMA            reduce using rule 34 (acao -> error .)
+    SUBTRACAO       reduce using rule 34 (acao -> error .)
+    FIM             reduce using rule 34 (acao -> error .)
+    SENAO           reduce using rule 34 (acao -> error .)
 
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    expressao                      shift and go to state 105
-    operador_soma                  shift and go to state 34
 
 state 87
 
-    (37) repita -> REPITA . corpo ATE expressao
-    (25) corpo -> . corpo acao
-    (26) corpo -> . vazio
-    (72) vazio -> .
+    (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .
 
-    ATE             reduce using rule 72 (vazio -> .)
-    error           reduce using rule 72 (vazio -> .)
-    SE              reduce using rule 72 (vazio -> .)
-    REPITA          reduce using rule 72 (vazio -> .)
-    LEIA            reduce using rule 72 (vazio -> .)
-    ESCREVA         reduce using rule 72 (vazio -> .)
-    RETORNA         reduce using rule 72 (vazio -> .)
-    INTEIRO         reduce using rule 72 (vazio -> .)
-    FLUTUANTE       reduce using rule 72 (vazio -> .)
-    IDENTIFICADOR   reduce using rule 72 (vazio -> .)
-    ABRE_COLXETE    reduce using rule 72 (vazio -> .)
-    SOMA            reduce using rule 72 (vazio -> .)
-    SUBTRACAO       reduce using rule 72 (vazio -> .)
+    INTEIRO         reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
+    FLUTUANTE       reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
+    IDENTIFICADOR   reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
+    $end            reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
 
-    corpo                          shift and go to state 106
-    vazio                          shift and go to state 82
 
 state 88
+
+    (25) corpo -> corpo acao .
+
+    FIM             reduce using rule 25 (corpo -> corpo acao .)
+    error           reduce using rule 25 (corpo -> corpo acao .)
+    SE              reduce using rule 25 (corpo -> corpo acao .)
+    REPITA          reduce using rule 25 (corpo -> corpo acao .)
+    LEIA            reduce using rule 25 (corpo -> corpo acao .)
+    ESCREVA         reduce using rule 25 (corpo -> corpo acao .)
+    RETORNA         reduce using rule 25 (corpo -> corpo acao .)
+    INTEIRO         reduce using rule 25 (corpo -> corpo acao .)
+    FLUTUANTE       reduce using rule 25 (corpo -> corpo acao .)
+    IDENTIFICADOR   reduce using rule 25 (corpo -> corpo acao .)
+    ABRE_COLXETE    reduce using rule 25 (corpo -> corpo acao .)
+    SOMA            reduce using rule 25 (corpo -> corpo acao .)
+    SUBTRACAO       reduce using rule 25 (corpo -> corpo acao .)
+    ATE             reduce using rule 25 (corpo -> corpo acao .)
+    SENAO           reduce using rule 25 (corpo -> corpo acao .)
+
+
+state 89
+
+    (40) escreva -> ESCREVA . ABRE_PARENTESES expressao FECHA_PARENTESES
+
+    ABRE_PARENTESES shift and go to state 105
+
+
+state 90
+
+    (31) acao -> leia .
+
+    ATE             reduce using rule 31 (acao -> leia .)
+    error           reduce using rule 31 (acao -> leia .)
+    SE              reduce using rule 31 (acao -> leia .)
+    REPITA          reduce using rule 31 (acao -> leia .)
+    LEIA            reduce using rule 31 (acao -> leia .)
+    ESCREVA         reduce using rule 31 (acao -> leia .)
+    RETORNA         reduce using rule 31 (acao -> leia .)
+    INTEIRO         reduce using rule 31 (acao -> leia .)
+    FLUTUANTE       reduce using rule 31 (acao -> leia .)
+    IDENTIFICADOR   reduce using rule 31 (acao -> leia .)
+    ABRE_COLXETE    reduce using rule 31 (acao -> leia .)
+    SOMA            reduce using rule 31 (acao -> leia .)
+    SUBTRACAO       reduce using rule 31 (acao -> leia .)
+    FIM             reduce using rule 31 (acao -> leia .)
+    SENAO           reduce using rule 31 (acao -> leia .)
+
+
+state 91
+
+    (39) leia -> LEIA . ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
+
+    ABRE_PARENTESES shift and go to state 106
+
+
+state 92
+
+    (30) acao -> repita .
+
+    ATE             reduce using rule 30 (acao -> repita .)
+    error           reduce using rule 30 (acao -> repita .)
+    SE              reduce using rule 30 (acao -> repita .)
+    REPITA          reduce using rule 30 (acao -> repita .)
+    LEIA            reduce using rule 30 (acao -> repita .)
+    ESCREVA         reduce using rule 30 (acao -> repita .)
+    RETORNA         reduce using rule 30 (acao -> repita .)
+    INTEIRO         reduce using rule 30 (acao -> repita .)
+    FLUTUANTE       reduce using rule 30 (acao -> repita .)
+    IDENTIFICADOR   reduce using rule 30 (acao -> repita .)
+    ABRE_COLXETE    reduce using rule 30 (acao -> repita .)
+    SOMA            reduce using rule 30 (acao -> repita .)
+    SUBTRACAO       reduce using rule 30 (acao -> repita .)
+    FIM             reduce using rule 30 (acao -> repita .)
+    SENAO           reduce using rule 30 (acao -> repita .)
+
+
+state 93
+
+    (28) acao -> declaracao_variaveis .
+
+    ATE             reduce using rule 28 (acao -> declaracao_variaveis .)
+    error           reduce using rule 28 (acao -> declaracao_variaveis .)
+    SE              reduce using rule 28 (acao -> declaracao_variaveis .)
+    REPITA          reduce using rule 28 (acao -> declaracao_variaveis .)
+    LEIA            reduce using rule 28 (acao -> declaracao_variaveis .)
+    ESCREVA         reduce using rule 28 (acao -> declaracao_variaveis .)
+    RETORNA         reduce using rule 28 (acao -> declaracao_variaveis .)
+    INTEIRO         reduce using rule 28 (acao -> declaracao_variaveis .)
+    FLUTUANTE       reduce using rule 28 (acao -> declaracao_variaveis .)
+    IDENTIFICADOR   reduce using rule 28 (acao -> declaracao_variaveis .)
+    ABRE_COLXETE    reduce using rule 28 (acao -> declaracao_variaveis .)
+    SOMA            reduce using rule 28 (acao -> declaracao_variaveis .)
+    SUBTRACAO       reduce using rule 28 (acao -> declaracao_variaveis .)
+    FIM             reduce using rule 28 (acao -> declaracao_variaveis .)
+    SENAO           reduce using rule 28 (acao -> declaracao_variaveis .)
+
+
+state 94
 
     (15) tipo -> INTEIRO .
     (66) numero -> INTEIRO .
@@ -2207,40 +2266,32 @@ state 88
     ATE             reduce using rule 66 (numero -> INTEIRO .)
 
 
-state 89
+state 95
 
-    (34) acao -> error .
+    (32) acao -> escreva .
 
-    FIM             reduce using rule 34 (acao -> error .)
-    SENAO           reduce using rule 34 (acao -> error .)
-    error           reduce using rule 34 (acao -> error .)
-    SE              reduce using rule 34 (acao -> error .)
-    REPITA          reduce using rule 34 (acao -> error .)
-    LEIA            reduce using rule 34 (acao -> error .)
-    ESCREVA         reduce using rule 34 (acao -> error .)
-    RETORNA         reduce using rule 34 (acao -> error .)
-    INTEIRO         reduce using rule 34 (acao -> error .)
-    FLUTUANTE       reduce using rule 34 (acao -> error .)
-    IDENTIFICADOR   reduce using rule 34 (acao -> error .)
-    ABRE_COLXETE    reduce using rule 34 (acao -> error .)
-    SOMA            reduce using rule 34 (acao -> error .)
-    SUBTRACAO       reduce using rule 34 (acao -> error .)
-    ATE             reduce using rule 34 (acao -> error .)
-
-
-state 90
-
-    (41) retorna -> RETORNA . ABRE_PARENTESES expressao FECHA_PARENTESES
-
-    ABRE_PARENTESES shift and go to state 107
+    ATE             reduce using rule 32 (acao -> escreva .)
+    error           reduce using rule 32 (acao -> escreva .)
+    SE              reduce using rule 32 (acao -> escreva .)
+    REPITA          reduce using rule 32 (acao -> escreva .)
+    LEIA            reduce using rule 32 (acao -> escreva .)
+    ESCREVA         reduce using rule 32 (acao -> escreva .)
+    RETORNA         reduce using rule 32 (acao -> escreva .)
+    INTEIRO         reduce using rule 32 (acao -> escreva .)
+    FLUTUANTE       reduce using rule 32 (acao -> escreva .)
+    IDENTIFICADOR   reduce using rule 32 (acao -> escreva .)
+    ABRE_COLXETE    reduce using rule 32 (acao -> escreva .)
+    SOMA            reduce using rule 32 (acao -> escreva .)
+    SUBTRACAO       reduce using rule 32 (acao -> escreva .)
+    FIM             reduce using rule 32 (acao -> escreva .)
+    SENAO           reduce using rule 32 (acao -> escreva .)
 
 
-state 91
+state 96
 
     (33) acao -> retorna .
 
-    FIM             reduce using rule 33 (acao -> retorna .)
-    SENAO           reduce using rule 33 (acao -> retorna .)
+    ATE             reduce using rule 33 (acao -> retorna .)
     error           reduce using rule 33 (acao -> retorna .)
     SE              reduce using rule 33 (acao -> retorna .)
     REPITA          reduce using rule 33 (acao -> retorna .)
@@ -2253,59 +2304,11 @@ state 91
     ABRE_COLXETE    reduce using rule 33 (acao -> retorna .)
     SOMA            reduce using rule 33 (acao -> retorna .)
     SUBTRACAO       reduce using rule 33 (acao -> retorna .)
-    ATE             reduce using rule 33 (acao -> retorna .)
+    FIM             reduce using rule 33 (acao -> retorna .)
+    SENAO           reduce using rule 33 (acao -> retorna .)
 
 
-state 92
-
-    (25) corpo -> corpo acao .
-
-    FIM             reduce using rule 25 (corpo -> corpo acao .)
-    SENAO           reduce using rule 25 (corpo -> corpo acao .)
-    error           reduce using rule 25 (corpo -> corpo acao .)
-    SE              reduce using rule 25 (corpo -> corpo acao .)
-    REPITA          reduce using rule 25 (corpo -> corpo acao .)
-    LEIA            reduce using rule 25 (corpo -> corpo acao .)
-    ESCREVA         reduce using rule 25 (corpo -> corpo acao .)
-    RETORNA         reduce using rule 25 (corpo -> corpo acao .)
-    INTEIRO         reduce using rule 25 (corpo -> corpo acao .)
-    FLUTUANTE       reduce using rule 25 (corpo -> corpo acao .)
-    IDENTIFICADOR   reduce using rule 25 (corpo -> corpo acao .)
-    ABRE_COLXETE    reduce using rule 25 (corpo -> corpo acao .)
-    SOMA            reduce using rule 25 (corpo -> corpo acao .)
-    SUBTRACAO       reduce using rule 25 (corpo -> corpo acao .)
-    ATE             reduce using rule 25 (corpo -> corpo acao .)
-
-
-state 93
-
-    (30) acao -> repita .
-
-    FIM             reduce using rule 30 (acao -> repita .)
-    SENAO           reduce using rule 30 (acao -> repita .)
-    error           reduce using rule 30 (acao -> repita .)
-    SE              reduce using rule 30 (acao -> repita .)
-    REPITA          reduce using rule 30 (acao -> repita .)
-    LEIA            reduce using rule 30 (acao -> repita .)
-    ESCREVA         reduce using rule 30 (acao -> repita .)
-    RETORNA         reduce using rule 30 (acao -> repita .)
-    INTEIRO         reduce using rule 30 (acao -> repita .)
-    FLUTUANTE       reduce using rule 30 (acao -> repita .)
-    IDENTIFICADOR   reduce using rule 30 (acao -> repita .)
-    ABRE_COLXETE    reduce using rule 30 (acao -> repita .)
-    SOMA            reduce using rule 30 (acao -> repita .)
-    SUBTRACAO       reduce using rule 30 (acao -> repita .)
-    ATE             reduce using rule 30 (acao -> repita .)
-
-
-state 94
-
-    (39) leia -> LEIA . ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES
-
-    ABRE_PARENTESES shift and go to state 108
-
-
-state 95
+state 97
 
     (16) tipo -> FLUTUANTE .
     (67) numero -> FLUTUANTE .
@@ -2336,40 +2339,95 @@ state 95
     ATE             reduce using rule 67 (numero -> FLUTUANTE .)
 
 
-state 96
-
-    (32) acao -> escreva .
-
-    FIM             reduce using rule 32 (acao -> escreva .)
-    SENAO           reduce using rule 32 (acao -> escreva .)
-    error           reduce using rule 32 (acao -> escreva .)
-    SE              reduce using rule 32 (acao -> escreva .)
-    REPITA          reduce using rule 32 (acao -> escreva .)
-    LEIA            reduce using rule 32 (acao -> escreva .)
-    ESCREVA         reduce using rule 32 (acao -> escreva .)
-    RETORNA         reduce using rule 32 (acao -> escreva .)
-    INTEIRO         reduce using rule 32 (acao -> escreva .)
-    FLUTUANTE       reduce using rule 32 (acao -> escreva .)
-    IDENTIFICADOR   reduce using rule 32 (acao -> escreva .)
-    ABRE_COLXETE    reduce using rule 32 (acao -> escreva .)
-    SOMA            reduce using rule 32 (acao -> escreva .)
-    SUBTRACAO       reduce using rule 32 (acao -> escreva .)
-    ATE             reduce using rule 32 (acao -> escreva .)
-
-
-state 97
-
-    (40) escreva -> ESCREVA . ABRE_PARENTESES expressao FECHA_PARENTESES
-
-    ABRE_PARENTESES shift and go to state 109
-
-
 state 98
+
+    (37) repita -> REPITA . corpo ATE expressao
+    (25) corpo -> . corpo acao
+    (26) corpo -> . vazio
+    (72) vazio -> .
+
+    ATE             reduce using rule 72 (vazio -> .)
+    error           reduce using rule 72 (vazio -> .)
+    SE              reduce using rule 72 (vazio -> .)
+    REPITA          reduce using rule 72 (vazio -> .)
+    LEIA            reduce using rule 72 (vazio -> .)
+    ESCREVA         reduce using rule 72 (vazio -> .)
+    RETORNA         reduce using rule 72 (vazio -> .)
+    INTEIRO         reduce using rule 72 (vazio -> .)
+    FLUTUANTE       reduce using rule 72 (vazio -> .)
+    IDENTIFICADOR   reduce using rule 72 (vazio -> .)
+    ABRE_COLXETE    reduce using rule 72 (vazio -> .)
+    SOMA            reduce using rule 72 (vazio -> .)
+    SUBTRACAO       reduce using rule 72 (vazio -> .)
+
+    vazio                          shift and go to state 82
+    corpo                          shift and go to state 107
+
+state 99
+
+    (41) retorna -> RETORNA . ABRE_PARENTESES expressao FECHA_PARENTESES
+
+    ABRE_PARENTESES shift and go to state 108
+
+
+state 100
+
+    (35) se -> SE . expressao ENTAO corpo FIM
+    (36) se -> SE . expressao ENTAO corpo SENAO corpo FIM
+    (42) expressao -> . expressao_simples
+    (43) expressao -> . atribuicao
+    (44) expressao_simples -> . expressao_aditiva
+    (45) expressao_simples -> . expressao_simples operador_relacional expressao_aditiva
+    (38) atribuicao -> . var ATRIBUICAO expressao
+    (46) expressao_aditiva -> . expressao_multiplicativa
+    (47) expressao_aditiva -> . expressao_aditiva operador_multiplicacao expressao_unaria
+    (11) var -> . IDENTIFICADOR
+    (12) var -> . IDENTIFICADOR indice
+    (48) expressao_multiplicativa -> . expressao_unaria
+    (49) expressao_multiplicativa -> . expressao_multiplicativa operador_multiplicacao expressao_unaria
+    (50) expressao_unaria -> . fator
+    (51) expressao_unaria -> . operador_soma fator
+    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
+    (63) fator -> . var
+    (64) fator -> . chamada_funcao
+    (65) fator -> . numero
+    (58) operador_soma -> . SOMA
+    (59) operador_soma -> . SUBTRACAO
+    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    (66) numero -> . INTEIRO
+    (67) numero -> . FLUTUANTE
+
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
+
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 109
+
+state 101
+
+    (7) declaracao_variaveis -> tipo . DOIS_PONTOS lista_variaveis
+
+    DOIS_PONTOS     shift and go to state 14
+
+
+state 102
 
     (29) acao -> se .
 
-    FIM             reduce using rule 29 (acao -> se .)
-    SENAO           reduce using rule 29 (acao -> se .)
+    ATE             reduce using rule 29 (acao -> se .)
     error           reduce using rule 29 (acao -> se .)
     SE              reduce using rule 29 (acao -> se .)
     REPITA          reduce using rule 29 (acao -> se .)
@@ -2382,74 +2440,15 @@ state 98
     ABRE_COLXETE    reduce using rule 29 (acao -> se .)
     SOMA            reduce using rule 29 (acao -> se .)
     SUBTRACAO       reduce using rule 29 (acao -> se .)
-    ATE             reduce using rule 29 (acao -> se .)
-
-
-state 99
-
-    (31) acao -> leia .
-
-    FIM             reduce using rule 31 (acao -> leia .)
-    SENAO           reduce using rule 31 (acao -> leia .)
-    error           reduce using rule 31 (acao -> leia .)
-    SE              reduce using rule 31 (acao -> leia .)
-    REPITA          reduce using rule 31 (acao -> leia .)
-    LEIA            reduce using rule 31 (acao -> leia .)
-    ESCREVA         reduce using rule 31 (acao -> leia .)
-    RETORNA         reduce using rule 31 (acao -> leia .)
-    INTEIRO         reduce using rule 31 (acao -> leia .)
-    FLUTUANTE       reduce using rule 31 (acao -> leia .)
-    IDENTIFICADOR   reduce using rule 31 (acao -> leia .)
-    ABRE_COLXETE    reduce using rule 31 (acao -> leia .)
-    SOMA            reduce using rule 31 (acao -> leia .)
-    SUBTRACAO       reduce using rule 31 (acao -> leia .)
-    ATE             reduce using rule 31 (acao -> leia .)
-
-
-state 100
-
-    (7) declaracao_variaveis -> tipo . DOIS_PONTOS lista_variaveis
-
-    DOIS_PONTOS     shift and go to state 16
-
-
-state 101
-
-    (28) acao -> declaracao_variaveis .
-
-    FIM             reduce using rule 28 (acao -> declaracao_variaveis .)
-    SENAO           reduce using rule 28 (acao -> declaracao_variaveis .)
-    error           reduce using rule 28 (acao -> declaracao_variaveis .)
-    SE              reduce using rule 28 (acao -> declaracao_variaveis .)
-    REPITA          reduce using rule 28 (acao -> declaracao_variaveis .)
-    LEIA            reduce using rule 28 (acao -> declaracao_variaveis .)
-    ESCREVA         reduce using rule 28 (acao -> declaracao_variaveis .)
-    RETORNA         reduce using rule 28 (acao -> declaracao_variaveis .)
-    INTEIRO         reduce using rule 28 (acao -> declaracao_variaveis .)
-    FLUTUANTE       reduce using rule 28 (acao -> declaracao_variaveis .)
-    IDENTIFICADOR   reduce using rule 28 (acao -> declaracao_variaveis .)
-    ABRE_COLXETE    reduce using rule 28 (acao -> declaracao_variaveis .)
-    SOMA            reduce using rule 28 (acao -> declaracao_variaveis .)
-    SUBTRACAO       reduce using rule 28 (acao -> declaracao_variaveis .)
-    ATE             reduce using rule 28 (acao -> declaracao_variaveis .)
-
-
-state 102
-
-    (19) cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .
-
-    INTEIRO         reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
-    FLUTUANTE       reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
-    IDENTIFICADOR   reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
-    $end            reduce using rule 19 (cabecalho -> IDENTIFICADOR ABRE_PARENTESES lista_parametros FECHA_PARENTESES corpo FIM .)
+    FIM             reduce using rule 29 (acao -> se .)
+    SENAO           reduce using rule 29 (acao -> se .)
 
 
 state 103
 
     (27) acao -> expressao .
 
-    FIM             reduce using rule 27 (acao -> expressao .)
-    SENAO           reduce using rule 27 (acao -> expressao .)
+    ATE             reduce using rule 27 (acao -> expressao .)
     error           reduce using rule 27 (acao -> expressao .)
     SE              reduce using rule 27 (acao -> expressao .)
     REPITA          reduce using rule 27 (acao -> expressao .)
@@ -2462,7 +2461,8 @@ state 103
     ABRE_COLXETE    reduce using rule 27 (acao -> expressao .)
     SOMA            reduce using rule 27 (acao -> expressao .)
     SUBTRACAO       reduce using rule 27 (acao -> expressao .)
-    ATE             reduce using rule 27 (acao -> expressao .)
+    FIM             reduce using rule 27 (acao -> expressao .)
+    SENAO           reduce using rule 27 (acao -> expressao .)
 
 
 state 104
@@ -2475,13 +2475,57 @@ state 104
 
 state 105
 
-    (35) se -> SE expressao . ENTAO corpo FIM
-    (36) se -> SE expressao . ENTAO corpo SENAO corpo FIM
+    (40) escreva -> ESCREVA ABRE_PARENTESES . expressao FECHA_PARENTESES
+    (42) expressao -> . expressao_simples
+    (43) expressao -> . atribuicao
+    (44) expressao_simples -> . expressao_aditiva
+    (45) expressao_simples -> . expressao_simples operador_relacional expressao_aditiva
+    (38) atribuicao -> . var ATRIBUICAO expressao
+    (46) expressao_aditiva -> . expressao_multiplicativa
+    (47) expressao_aditiva -> . expressao_aditiva operador_multiplicacao expressao_unaria
+    (11) var -> . IDENTIFICADOR
+    (12) var -> . IDENTIFICADOR indice
+    (48) expressao_multiplicativa -> . expressao_unaria
+    (49) expressao_multiplicativa -> . expressao_multiplicativa operador_multiplicacao expressao_unaria
+    (50) expressao_unaria -> . fator
+    (51) expressao_unaria -> . operador_soma fator
+    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
+    (63) fator -> . var
+    (64) fator -> . chamada_funcao
+    (65) fator -> . numero
+    (58) operador_soma -> . SOMA
+    (59) operador_soma -> . SUBTRACAO
+    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
+    (66) numero -> . INTEIRO
+    (67) numero -> . FLUTUANTE
 
-    ENTAO           shift and go to state 110
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 110
 
 state 106
+
+    (39) leia -> LEIA ABRE_PARENTESES . IDENTIFICADOR FECHA_PARENTESES
+
+    IDENTIFICADOR   shift and go to state 111
+
+
+state 107
 
     (37) repita -> REPITA corpo . ATE expressao
     (25) corpo -> corpo . acao
@@ -2525,41 +2569,41 @@ state 106
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    ATE             shift and go to state 111
-    error           shift and go to state 89
-    SE              shift and go to state 86
-    REPITA          shift and go to state 87
-    LEIA            shift and go to state 94
-    ESCREVA         shift and go to state 97
-    RETORNA         shift and go to state 90
-    INTEIRO         shift and go to state 88
-    FLUTUANTE       shift and go to state 95
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
+    ATE             shift and go to state 112
+    error           shift and go to state 86
+    SE              shift and go to state 100
+    REPITA          shift and go to state 98
+    LEIA            shift and go to state 91
+    ESCREVA         shift and go to state 89
+    RETORNA         shift and go to state 99
+    INTEIRO         shift and go to state 94
+    FLUTUANTE       shift and go to state 97
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
 
-    escreva                        shift and go to state 96
-    fator                          shift and go to state 41
-    retorna                        shift and go to state 91
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    leia                           shift and go to state 99
-    numero                         shift and go to state 39
-    tipo                           shift and go to state 100
-    expressao_multiplicativa       shift and go to state 29
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 31
-    operador_soma                  shift and go to state 34
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    declaracao_variaveis           shift and go to state 101
-    se                             shift and go to state 98
-    acao                           shift and go to state 92
-    repita                         shift and go to state 93
+    expressao_multiplicativa       shift and go to state 25
+    se                             shift and go to state 102
+    expressao_aditiva              shift and go to state 28
+    declaracao_variaveis           shift and go to state 93
+    chamada_funcao                 shift and go to state 33
+    escreva                        shift and go to state 95
+    retorna                        shift and go to state 96
+    operador_soma                  shift and go to state 36
+    leia                           shift and go to state 90
+    fator                          shift and go to state 37
+    numero                         shift and go to state 35
+    atribuicao                     shift and go to state 38
+    acao                           shift and go to state 88
+    expressao_simples              shift and go to state 26
+    tipo                           shift and go to state 101
+    var                            shift and go to state 27
+    repita                         shift and go to state 92
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 103
 
-state 107
+state 108
 
     (41) retorna -> RETORNA ABRE_PARENTESES . expressao FECHA_PARENTESES
     (42) expressao -> . expressao_simples
@@ -2585,104 +2629,48 @@ state 107
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    expressao                      shift and go to state 112
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
-
-state 108
-
-    (39) leia -> LEIA ABRE_PARENTESES . IDENTIFICADOR FECHA_PARENTESES
-
-    IDENTIFICADOR   shift and go to state 113
-
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 113
 
 state 109
 
-    (40) escreva -> ESCREVA ABRE_PARENTESES . expressao FECHA_PARENTESES
-    (42) expressao -> . expressao_simples
-    (43) expressao -> . atribuicao
-    (44) expressao_simples -> . expressao_aditiva
-    (45) expressao_simples -> . expressao_simples operador_relacional expressao_aditiva
-    (38) atribuicao -> . var ATRIBUICAO expressao
-    (46) expressao_aditiva -> . expressao_multiplicativa
-    (47) expressao_aditiva -> . expressao_aditiva operador_multiplicacao expressao_unaria
-    (11) var -> . IDENTIFICADOR
-    (12) var -> . IDENTIFICADOR indice
-    (48) expressao_multiplicativa -> . expressao_unaria
-    (49) expressao_multiplicativa -> . expressao_multiplicativa operador_multiplicacao expressao_unaria
-    (50) expressao_unaria -> . fator
-    (51) expressao_unaria -> . operador_soma fator
-    (62) fator -> . ABRE_COLXETE expressao FECHA_COLXETE
-    (63) fator -> . var
-    (64) fator -> . chamada_funcao
-    (65) fator -> . numero
-    (58) operador_soma -> . SOMA
-    (59) operador_soma -> . SUBTRACAO
-    (68) chamada_funcao -> . IDENTIFICADOR ABRE_PARENTESES lista_argumentos FECHA_PARENTESES
-    (66) numero -> . INTEIRO
-    (67) numero -> . FLUTUANTE
+    (35) se -> SE expressao . ENTAO corpo FIM
+    (36) se -> SE expressao . ENTAO corpo SENAO corpo FIM
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    ENTAO           shift and go to state 114
 
-    expressao_aditiva              shift and go to state 35
-    expressao                      shift and go to state 114
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    var                            shift and go to state 33
-    operador_soma                  shift and go to state 34
 
 state 110
 
-    (35) se -> SE expressao ENTAO . corpo FIM
-    (36) se -> SE expressao ENTAO . corpo SENAO corpo FIM
-    (25) corpo -> . corpo acao
-    (26) corpo -> . vazio
-    (72) vazio -> .
+    (40) escreva -> ESCREVA ABRE_PARENTESES expressao . FECHA_PARENTESES
 
-    FIM             reduce using rule 72 (vazio -> .)
-    SENAO           reduce using rule 72 (vazio -> .)
-    error           reduce using rule 72 (vazio -> .)
-    SE              reduce using rule 72 (vazio -> .)
-    REPITA          reduce using rule 72 (vazio -> .)
-    LEIA            reduce using rule 72 (vazio -> .)
-    ESCREVA         reduce using rule 72 (vazio -> .)
-    RETORNA         reduce using rule 72 (vazio -> .)
-    INTEIRO         reduce using rule 72 (vazio -> .)
-    FLUTUANTE       reduce using rule 72 (vazio -> .)
-    IDENTIFICADOR   reduce using rule 72 (vazio -> .)
-    ABRE_COLXETE    reduce using rule 72 (vazio -> .)
-    SOMA            reduce using rule 72 (vazio -> .)
-    SUBTRACAO       reduce using rule 72 (vazio -> .)
+    FECHA_PARENTESES shift and go to state 115
 
-    corpo                          shift and go to state 115
-    vazio                          shift and go to state 82
 
 state 111
+
+    (39) leia -> LEIA ABRE_PARENTESES IDENTIFICADOR . FECHA_PARENTESES
+
+    FECHA_PARENTESES shift and go to state 116
+
+
+state 112
 
     (37) repita -> REPITA corpo ATE . expressao
     (42) expressao -> . expressao_simples
@@ -2708,47 +2696,143 @@ state 111
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
-    INTEIRO         shift and go to state 26
-    FLUTUANTE       shift and go to state 25
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
+    INTEIRO         shift and go to state 39
+    FLUTUANTE       shift and go to state 29
 
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    numero                         shift and go to state 39
-    fator                          shift and go to state 41
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    chamada_funcao                 shift and go to state 30
-    expressao_multiplicativa       shift and go to state 29
-    expressao_unaria               shift and go to state 31
-    expressao                      shift and go to state 116
-    operador_soma                  shift and go to state 34
-
-state 112
-
-    (41) retorna -> RETORNA ABRE_PARENTESES expressao . FECHA_PARENTESES
-
-    FECHA_PARENTESES shift and go to state 117
-
+    chamada_funcao                 shift and go to state 33
+    expressao_multiplicativa       shift and go to state 25
+    numero                         shift and go to state 35
+    expressao_simples              shift and go to state 26
+    operador_soma                  shift and go to state 36
+    atribuicao                     shift and go to state 38
+    expressao_aditiva              shift and go to state 28
+    fator                          shift and go to state 37
+    var                            shift and go to state 27
+    expressao_unaria               shift and go to state 40
+    expressao                      shift and go to state 117
 
 state 113
 
-    (39) leia -> LEIA ABRE_PARENTESES IDENTIFICADOR . FECHA_PARENTESES
+    (41) retorna -> RETORNA ABRE_PARENTESES expressao . FECHA_PARENTESES
 
     FECHA_PARENTESES shift and go to state 118
 
 
 state 114
 
-    (40) escreva -> ESCREVA ABRE_PARENTESES expressao . FECHA_PARENTESES
+    (35) se -> SE expressao ENTAO . corpo FIM
+    (36) se -> SE expressao ENTAO . corpo SENAO corpo FIM
+    (25) corpo -> . corpo acao
+    (26) corpo -> . vazio
+    (72) vazio -> .
 
-    FECHA_PARENTESES shift and go to state 119
+    FIM             reduce using rule 72 (vazio -> .)
+    SENAO           reduce using rule 72 (vazio -> .)
+    error           reduce using rule 72 (vazio -> .)
+    SE              reduce using rule 72 (vazio -> .)
+    REPITA          reduce using rule 72 (vazio -> .)
+    LEIA            reduce using rule 72 (vazio -> .)
+    ESCREVA         reduce using rule 72 (vazio -> .)
+    RETORNA         reduce using rule 72 (vazio -> .)
+    INTEIRO         reduce using rule 72 (vazio -> .)
+    FLUTUANTE       reduce using rule 72 (vazio -> .)
+    IDENTIFICADOR   reduce using rule 72 (vazio -> .)
+    ABRE_COLXETE    reduce using rule 72 (vazio -> .)
+    SOMA            reduce using rule 72 (vazio -> .)
+    SUBTRACAO       reduce using rule 72 (vazio -> .)
 
+    vazio                          shift and go to state 82
+    corpo                          shift and go to state 119
 
 state 115
+
+    (40) escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .
+
+    FIM             reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    error           reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SE              reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    REPITA          reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    LEIA            reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    ESCREVA         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    RETORNA         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    INTEIRO         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    FLUTUANTE       reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    IDENTIFICADOR   reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    ABRE_COLXETE    reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SOMA            reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SUBTRACAO       reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SENAO           reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    ATE             reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+
+
+state 116
+
+    (39) leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .
+
+    FIM             reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    error           reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    SE              reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    REPITA          reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    LEIA            reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    ESCREVA         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    RETORNA         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    INTEIRO         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    FLUTUANTE       reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    IDENTIFICADOR   reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    ABRE_COLXETE    reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    SOMA            reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    SUBTRACAO       reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    SENAO           reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+    ATE             reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
+
+
+state 117
+
+    (37) repita -> REPITA corpo ATE expressao .
+
+    FIM             reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    error           reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    SE              reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    REPITA          reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    LEIA            reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    ESCREVA         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    RETORNA         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    INTEIRO         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    FLUTUANTE       reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    IDENTIFICADOR   reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    ABRE_COLXETE    reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    SOMA            reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    SUBTRACAO       reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    SENAO           reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+    ATE             reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
+
+
+state 118
+
+    (41) retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .
+
+    ATE             reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    error           reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SE              reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    REPITA          reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    LEIA            reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    ESCREVA         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    RETORNA         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    INTEIRO         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    FLUTUANTE       reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    IDENTIFICADOR   reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    ABRE_COLXETE    reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SOMA            reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SUBTRACAO       reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    FIM             reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+    SENAO           reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
+
+
+state 119
 
     (35) se -> SE expressao ENTAO corpo . FIM
     (36) se -> SE expressao ENTAO corpo . SENAO corpo FIM
@@ -2793,126 +2877,63 @@ state 115
     (66) numero -> . INTEIRO
     (67) numero -> . FLUTUANTE
 
-    FIM             shift and go to state 121
-    SENAO           shift and go to state 120
-    error           shift and go to state 89
-    SE              shift and go to state 86
-    REPITA          shift and go to state 87
-    LEIA            shift and go to state 94
-    ESCREVA         shift and go to state 97
-    RETORNA         shift and go to state 90
-    INTEIRO         shift and go to state 88
-    FLUTUANTE       shift and go to state 95
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
+    FIM             shift and go to state 120
+    SENAO           shift and go to state 121
+    error           shift and go to state 86
+    SE              shift and go to state 100
+    REPITA          shift and go to state 98
+    LEIA            shift and go to state 91
+    ESCREVA         shift and go to state 89
+    RETORNA         shift and go to state 99
+    INTEIRO         shift and go to state 94
+    FLUTUANTE       shift and go to state 97
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
 
-    escreva                        shift and go to state 96
-    fator                          shift and go to state 41
-    retorna                        shift and go to state 91
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    leia                           shift and go to state 99
-    numero                         shift and go to state 39
-    tipo                           shift and go to state 100
-    expressao_multiplicativa       shift and go to state 29
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 31
-    operador_soma                  shift and go to state 34
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    declaracao_variaveis           shift and go to state 101
-    se                             shift and go to state 98
-    acao                           shift and go to state 92
-    repita                         shift and go to state 93
+    expressao_multiplicativa       shift and go to state 25
+    se                             shift and go to state 102
+    expressao_aditiva              shift and go to state 28
+    declaracao_variaveis           shift and go to state 93
+    chamada_funcao                 shift and go to state 33
+    escreva                        shift and go to state 95
+    retorna                        shift and go to state 96
+    operador_soma                  shift and go to state 36
+    leia                           shift and go to state 90
+    fator                          shift and go to state 37
+    numero                         shift and go to state 35
+    atribuicao                     shift and go to state 38
+    acao                           shift and go to state 88
+    expressao_simples              shift and go to state 26
+    tipo                           shift and go to state 101
+    var                            shift and go to state 27
+    repita                         shift and go to state 92
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 103
 
-state 116
-
-    (37) repita -> REPITA corpo ATE expressao .
-
-    FIM             reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    error           reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    SE              reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    REPITA          reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    LEIA            reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    ESCREVA         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    RETORNA         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    INTEIRO         reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    FLUTUANTE       reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    IDENTIFICADOR   reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    ABRE_COLXETE    reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    SOMA            reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    SUBTRACAO       reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    ATE             reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-    SENAO           reduce using rule 37 (repita -> REPITA corpo ATE expressao .)
-
-
-state 117
-
-    (41) retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .
-
-    FIM             reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    error           reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SE              reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    REPITA          reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    LEIA            reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ESCREVA         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    RETORNA         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    INTEIRO         reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    FLUTUANTE       reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    IDENTIFICADOR   reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ABRE_COLXETE    reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SOMA            reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SUBTRACAO       reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ATE             reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SENAO           reduce using rule 41 (retorna -> RETORNA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-
-
-state 118
-
-    (39) leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .
-
-    FIM             reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    error           reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    SE              reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    REPITA          reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    LEIA            reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    ESCREVA         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    RETORNA         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    INTEIRO         reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    FLUTUANTE       reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    IDENTIFICADOR   reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    ABRE_COLXETE    reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    SOMA            reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    SUBTRACAO       reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    SENAO           reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-    ATE             reduce using rule 39 (leia -> LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES .)
-
-
-state 119
-
-    (40) escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .
-
-    FIM             reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SENAO           reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    error           reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SE              reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    REPITA          reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    LEIA            reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ESCREVA         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    RETORNA         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    INTEIRO         reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    FLUTUANTE       reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    IDENTIFICADOR   reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ABRE_COLXETE    reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SOMA            reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    SUBTRACAO       reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-    ATE             reduce using rule 40 (escreva -> ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES .)
-
-
 state 120
+
+    (35) se -> SE expressao ENTAO corpo FIM .
+
+    FIM             reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    error           reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    SE              reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    REPITA          reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    LEIA            reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    ESCREVA         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    RETORNA         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    INTEIRO         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    FLUTUANTE       reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    IDENTIFICADOR   reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    ABRE_COLXETE    reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    SOMA            reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    SUBTRACAO       reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    SENAO           reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+    ATE             reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
+
+
+state 121
 
     (36) se -> SE expressao ENTAO corpo SENAO . corpo FIM
     (25) corpo -> . corpo acao
@@ -2933,29 +2954,8 @@ state 120
     SOMA            reduce using rule 72 (vazio -> .)
     SUBTRACAO       reduce using rule 72 (vazio -> .)
 
-    corpo                          shift and go to state 122
     vazio                          shift and go to state 82
-
-state 121
-
-    (35) se -> SE expressao ENTAO corpo FIM .
-
-    ATE             reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    error           reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    SE              reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    REPITA          reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    LEIA            reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    ESCREVA         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    RETORNA         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    INTEIRO         reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    FLUTUANTE       reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    IDENTIFICADOR   reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    ABRE_COLXETE    reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    SOMA            reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    SUBTRACAO       reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    FIM             reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-    SENAO           reduce using rule 35 (se -> SE expressao ENTAO corpo FIM .)
-
+    corpo                          shift and go to state 122
 
 state 122
 
@@ -3002,44 +3002,44 @@ state 122
     (67) numero -> . FLUTUANTE
 
     FIM             shift and go to state 123
-    error           shift and go to state 89
-    SE              shift and go to state 86
-    REPITA          shift and go to state 87
-    LEIA            shift and go to state 94
-    ESCREVA         shift and go to state 97
-    RETORNA         shift and go to state 90
-    INTEIRO         shift and go to state 88
-    FLUTUANTE       shift and go to state 95
-    IDENTIFICADOR   shift and go to state 32
-    ABRE_COLXETE    shift and go to state 36
-    SOMA            shift and go to state 37
-    SUBTRACAO       shift and go to state 38
+    error           shift and go to state 86
+    SE              shift and go to state 100
+    REPITA          shift and go to state 98
+    LEIA            shift and go to state 91
+    ESCREVA         shift and go to state 89
+    RETORNA         shift and go to state 99
+    INTEIRO         shift and go to state 94
+    FLUTUANTE       shift and go to state 97
+    IDENTIFICADOR   shift and go to state 31
+    ABRE_COLXETE    shift and go to state 32
+    SOMA            shift and go to state 34
+    SUBTRACAO       shift and go to state 30
 
-    escreva                        shift and go to state 96
-    fator                          shift and go to state 41
-    retorna                        shift and go to state 91
-    atribuicao                     shift and go to state 27
-    expressao_simples              shift and go to state 28
-    leia                           shift and go to state 99
-    numero                         shift and go to state 39
-    tipo                           shift and go to state 100
-    expressao_multiplicativa       shift and go to state 29
-    chamada_funcao                 shift and go to state 30
-    expressao_unaria               shift and go to state 31
-    operador_soma                  shift and go to state 34
-    expressao_aditiva              shift and go to state 35
-    var                            shift and go to state 33
-    declaracao_variaveis           shift and go to state 101
-    se                             shift and go to state 98
-    acao                           shift and go to state 92
-    repita                         shift and go to state 93
+    expressao_multiplicativa       shift and go to state 25
+    se                             shift and go to state 102
+    expressao_aditiva              shift and go to state 28
+    declaracao_variaveis           shift and go to state 93
+    chamada_funcao                 shift and go to state 33
+    escreva                        shift and go to state 95
+    retorna                        shift and go to state 96
+    operador_soma                  shift and go to state 36
+    leia                           shift and go to state 90
+    fator                          shift and go to state 37
+    numero                         shift and go to state 35
+    atribuicao                     shift and go to state 38
+    acao                           shift and go to state 88
+    expressao_simples              shift and go to state 26
+    tipo                           shift and go to state 101
+    var                            shift and go to state 27
+    repita                         shift and go to state 92
+    expressao_unaria               shift and go to state 40
     expressao                      shift and go to state 103
 
 state 123
 
     (36) se -> SE expressao ENTAO corpo SENAO corpo FIM .
 
-    ATE             reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
+    FIM             reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     error           reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     SE              reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     REPITA          reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
@@ -3052,15 +3052,15 @@ state 123
     ABRE_COLXETE    reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     SOMA            reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     SUBTRACAO       reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
-    FIM             reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
     SENAO           reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
+    ATE             reduce using rule 36 (se -> SE expressao ENTAO corpo SENAO corpo FIM .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for ABRE_COLXETE in state 18 resolved as shift
-WARNING: shift/reduce conflict for ABRE_COLXETE in state 23 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICACAO in state 29 resolved as shift
-WARNING: shift/reduce conflict for DIVISAO in state 29 resolved as shift
-WARNING: shift/reduce conflict for ABRE_COLXETE in state 32 resolved as shift
-WARNING: shift/reduce conflict for VIRGULA in state 80 resolved as shift
+WARNING: shift/reduce conflict for ABRE_COLXETE in state 22 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICACAO in state 25 resolved as shift
+WARNING: shift/reduce conflict for DIVISAO in state 25 resolved as shift
+WARNING: shift/reduce conflict for ABRE_COLXETE in state 31 resolved as shift
+WARNING: shift/reduce conflict for VIRGULA in state 81 resolved as shift
